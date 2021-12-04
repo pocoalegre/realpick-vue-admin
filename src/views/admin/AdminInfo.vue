@@ -258,33 +258,37 @@ export default {
     },
     //确认修改图片
     confirmChange() {
-      const that = this
-      //formData对象
-      let formData = new FormData
-      formData.append('file',this.file)
-      formData.append('id', this.admin[0].adminId)
-      axios({
-        method: 'put',
-        url: 'admin/uploadImg',
-        data: formData,
-        headers: {
-          'ContentType': 'multipart/form-data',
-          token: this.$cookie.get("adminToken")
-        }
-      }).then(res => {
-        if (res.data.code === 10000){
-          that.$message.success(res.data.msg)
-          that.getAdmin()
-          that.$cookie.set('adminImg', res.data.data, {expires: 1})
-          //成功重置表单
-          that.file = null
-          setTimeout(function (){
-            that.base64Img = null
-          },200)
-        }else if (res.data.code === 10001){
-          that.$message.error(res.data.msg)
-        }
-      })
+      if (Object.keys(this.file).length === 0){
+        this.$message.error('请选择文件！')
+      }else {
+        const that = this
+        //formData对象
+        let formData = new FormData
+        formData.append('file', this.file)
+        formData.append('id', this.$cookie.get('adminId'))
+        axios({
+          method: 'put',
+          url: 'admin/uploadImg',
+          data: formData,
+          headers: {
+            'ContentType': 'multipart/form-data',
+            token: this.$cookie.get("adminToken")
+          }
+        }).then(res => {
+          if (res.data.code === 10000) {
+            that.$message.success(res.data.msg)
+            that.getAdmin()
+            that.$cookie.set('adminImg', res.data.data, {expires: 1})
+            //成功重置表单
+            that.file = null
+            setTimeout(function () {
+              that.base64Img = null
+            }, 200)
+          } else if (res.data.code === 10001) {
+            that.$message.error(res.data.msg)
+          }
+        })
+      }
     },
     //图片预览
     showImg(e) {

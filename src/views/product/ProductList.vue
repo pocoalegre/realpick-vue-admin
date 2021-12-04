@@ -150,7 +150,7 @@ export default {
       //页码
       pageNum: 1,
       //当前页码数据条数
-      pageSize: 10,
+      pageSize: 5,
       //列表总数
       total: 0,
       //查询类型

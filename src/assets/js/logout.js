@@ -4,7 +4,7 @@ import that from '../../main'
 //注销登录
 export default function logout() {
     Cookies.remove('adminToken')
-    Cookies.remove('activePath')
+    Cookies.remove('adminActivePath')
     Cookies.remove('adminId')
     Cookies.remove('adminImg')
     Cookies.remove('adminNickname')

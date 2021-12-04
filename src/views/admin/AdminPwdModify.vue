@@ -20,7 +20,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="modifyAdminPwd">提交</el-button>
-          <el-button @click="resetLoginForm">重置</el-button>
+          <el-button @click="resetModifyPwdForm">重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     //点击重置按钮，重置表单
-    resetLoginForm(){
+    resetModifyPwdForm(){
       this.$refs.modifyPwdFormRef.resetFields()
     },
     modifyAdminPwd() {
@@ -94,7 +94,7 @@ export default {
           })
         }
       })
-    },
+    }
   }
 }
 </script>

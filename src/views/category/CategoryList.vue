@@ -20,8 +20,18 @@
             </el-option>
           </el-select>
         </el-col>
+        <el-col :span="4" class="option-query">
+          <el-select v-model="queryType" placeholder="请选择查询类型" clearable @clear="getCategoryList" @change="getCategoryList">
+            <el-option
+                v-for="item in typeOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+            </el-option>
+          </el-select>
+        </el-col>
         <el-col :span="5">
-          <el-input placeholder="请输入商品类型名" v-model="queryInfo" @keyup.enter.native="getCategoryList" clearable @clear="getCategoryList" >
+          <el-input placeholder="请输入查询信息" v-model="queryInfo" @keyup.enter.native="getCategoryList" clearable @clear="getCategoryList" >
             <el-button slot="append" icon="el-icon-search" @click="getCategoryList"></el-button>
           </el-input>
         </el-col>
@@ -41,7 +51,7 @@
         <el-table-column label="商品类型父编号" prop="parentId"></el-table-column>
         <el-table-column label="商品类型图片">
           <template slot-scope="scope">
-            <img :src="categoryImg + scope.row.imgUrl" @click="showImg($event)">
+            <img :src="categoryImg + scope.row.imgUrl" @click="showImg($event)" v-if="scope.row.imgUrl">
           </template>
         </el-table-column>
         <el-table-column label="创建时间">
@@ -97,11 +107,11 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="商品类型父编号" prop="parentId" v-if="addForm.categoryLevel!==1">
+        <el-form-item label="商品类型父编号" prop="parentId" v-show="addForm.categoryLevel===2">
           <el-input v-model="addForm.parentId"></el-input>
         </el-form-item>
         <!-- 商品类型图片 -->
-        <el-form-item label="商品类型图片" class="category-img">
+        <el-form-item label="商品类型图片" class="category-img" v-show="addForm.categoryLevel===1">
           <img :src="base64Img?base64Img:defaultCategoryImg" class="avatar" @click="showImg($event)">
           <el-upload
               action=""
@@ -141,12 +151,12 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="商品类型父编号" prop="parentId" v-if="modifyForm.categoryLevel!==1">
+        <el-form-item label="商品类型父编号" prop="parentId" v-show="modifyForm.categoryLevel===2">
           <el-input v-model="modifyForm.parentId"></el-input>
         </el-form-item>
         <!-- 商品类型图片 -->
-        <el-form-item label="商品类型图片" class="category-img">
-          <img :src="base64Img?base64Img:totalCategoryImg" class="avatar" @click="showImg($event)">
+        <el-form-item label="商品类型图片" class="category-img" v-show="modifyForm.categoryLevel===1">
+          <img :src="base64Img?base64Img:this.modifyForm.imgUrl?totalCategoryImg:defaultCategoryImg" class="avatar" @click="showImg($event)">
           <el-upload
               action=""
               :auto-upload="false"
@@ -186,7 +196,7 @@ export default {
       //页码
       pageNum: 1,
       //当前页码数据条数
-      pageSize: 10,
+      pageSize: 5,
       //列表总数
       total: 0,
       //商品类型图片完整连接
@@ -207,7 +217,9 @@ export default {
       imgDialogVisible: false,
       //查询等级
       queryLevel: '',
-      //查询商品类型名
+      //查询类型
+      queryType: '',
+      //查询内容
       queryInfo: '',
       //等级选项
       levelOptions: [
@@ -219,6 +231,17 @@ export default {
           label: '二级分类',
           value: 2
         },
+      ],
+      //类型选项
+      typeOptions: [
+        {
+          label: '商品类型名',
+          value: 'category_name'
+        },
+        {
+          label: '商品类型父编号',
+          value: 'parent_id'
+        }
       ],
       //修改表单
       modifyForm: {
@@ -280,6 +303,7 @@ export default {
         url: 'category/list',
         params: {
           queryLevel: this.queryLevel,
+          queryType: this.queryType,
           queryInfo: this.queryInfo,
           pageNum: this.pageNum,
           pageSize: this.pageSize
@@ -516,7 +540,7 @@ export default {
     cancelModify() {
       const that = this
       this.modifyDialogVisible = false
-      this.$refs.addFormRef.resetFields()
+      this.$refs.modifyFormRef.resetFields()
       this.file = null
       setTimeout(function (){
         that.base64Img = null

@@ -188,7 +188,7 @@ export default {
       //页码
       pageNum: 1,
       //当前页码数据条数
-      pageSize: 10,
+      pageSize: 5,
       //列表总数
       total: 0,
       //查询类型
@@ -452,33 +452,37 @@ export default {
     },
     //确认修改图片
     confirmChange() {
-      const that = this
-      //formData对象
-      let formData = new FormData
-      formData.append('file',this.file)
-      formData.append('id', this.modifyForm.userId)
-      axios({
-        method: 'put',
-        url: 'user/uploadImg',
-        data: formData,
-        headers: {
-          'ContentType': 'multipart/form-data',
-          token: this.$cookie.get("adminToken")
-        }
-      }).then(res => {
-        if (res.data.code === 10000){
-          that.$message.success(res.data.msg)
-          that.getUser(this.modifyForm.userId)
-          that.getUserList()
-          //成功重置表单
-          that.file = null
-          setTimeout(function (){
-            that.base64Img = null
-          },200)
-        }else if (res.data.code === 10001){
-          that.$message.error(res.data.msg)
-        }
-      })
+      if (Object.keys(this.file).length===0){
+        this.$message.error('请选择文件！')
+      }else {
+        const that = this
+        //formData对象
+        let formData = new FormData
+        formData.append('file', this.file)
+        formData.append('id', this.modifyForm.userId)
+        axios({
+          method: 'put',
+          url: 'user/uploadImg',
+          data: formData,
+          headers: {
+            'ContentType': 'multipart/form-data',
+            token: this.$cookie.get("adminToken")
+          }
+        }).then(res => {
+          if (res.data.code === 10000) {
+            that.$message.success(res.data.msg)
+            that.getUser(this.modifyForm.userId)
+            that.getUserList()
+            //成功重置表单
+            that.file = null
+            setTimeout(function () {
+              that.base64Img = null
+            }, 200)
+          } else if (res.data.code === 10001) {
+            that.$message.error(res.data.msg)
+          }
+        })
+      }
     },
     //用户修改
     userModify() {
@@ -501,7 +505,6 @@ export default {
             }
           }).then(res => {
             if (res.data.code === 10000){
-              that.file = null
               //关闭对话框，重置回显
               that.modifyDialogVisible = false
               //刷新数据列表

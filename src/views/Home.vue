@@ -19,7 +19,7 @@
         <div class="toggle-button" @click="toggleCollapse">|||</div>
         <!-- 侧边栏菜单区 -->
         <el-menu
-            background-color="#333744"
+            background-color="#444444"
             text-color="#fff"
             active-text-color="#409eff"
             :default-active="activePath"
@@ -67,13 +67,14 @@ export default {
         return res;
       }
     })
-    this.activePath = this.$cookie.get('activePath')
+    this.activePath = this.$cookie.get('adminActivePath')
   },
   data(){
     return{
       adminNickname: this.$cookie.get('adminNickname'),
       adminImg: this.adminHeadImg + this.$cookie.get('adminImg'),
-    isCollapse: false,
+      //菜单折叠
+      isCollapse: false,
       parentList: [
         {
           number: 1,
@@ -122,7 +123,7 @@ export default {
     },
     //保存选中状态
     saveStatus(activePath){
-      this.$cookie.set('activePath', activePath)
+      this.$cookie.set('adminActivePath', activePath)
     }
   }
 }
@@ -134,7 +135,7 @@ export default {
 }
 
 .el-header {
-  background-color: #333744;
+  background-color: #444444;
   display: flex;
   justify-content: space-between;
   padding-left: 10px;
@@ -156,18 +157,18 @@ export default {
 }
 
 .el-aside {
-  background-color: #333744;
+  background-color: #444444;
   .el-menu {
     border-right: none;
   }
 }
 
 .el-main {
-  background-color: #eaedf1;
+  background-color: #f7f7f7;
 }
 
 .toggle-button {
-  background-color: #4a5064;
+  background-color: #494949;
   font-size: 10px;
   line-height: 24px;
   color: #fff;
