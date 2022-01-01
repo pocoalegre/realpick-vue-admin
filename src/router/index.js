@@ -14,7 +14,6 @@ import UserPwdModify from "@/views/user/UserPwdModify";
 import BannerList from "@/views/page/BannerList";
 import CategoryList from "@/views/category/CategoryList";
 import ProductList from "@/views/product/ProductList";
-import ProductImg from "@/views/product/ProductImg";
 import ProductParam from "@/views/product/ProductParam";
 import ProductSku from "@/views/product/ProductSku";
 import OrderList from "@/views/order/OrderList";
@@ -127,15 +126,6 @@ const routes = [
         component: ProductList,
         parent: 5,
         self: '商品管理',
-        icon: 'el-icon-s-tools',
-        display: true
-      },
-      {
-        path: '/productImg',
-        name: 'ProductImg',
-        component: ProductImg,
-        parent: 5,
-        self: '商品图片管理',
         icon: 'el-icon-s-tools',
         display: true
       },

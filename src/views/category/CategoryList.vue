@@ -414,10 +414,10 @@ export default {
     },
     //选择文件后
     onChangeFile(file) {
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isLt2M) {
-        this.$message.error('上传图片大小不能超过 2MB!');
-        return  isLt2M;
+      const isLt5M = file.size / 1024 / 1024 < 5;
+      if (!isLt5M) {
+        this.$message.error('上传图片大小不能超过 5MB!');
+        return isLt5M;
       }
       this.base64Encoding(file.raw)
       //文件

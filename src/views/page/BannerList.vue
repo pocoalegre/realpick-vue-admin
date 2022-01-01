@@ -103,14 +103,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="banner类型" prop="bannerType">
-          <el-select v-model="addForm.bannerType" placeholder="请选择">
-            <el-option
-                v-for="item in typeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-            </el-option>
-          </el-select>
+          <el-radio-group v-model="addForm.bannerType">
+            <el-radio :label="1">商品</el-radio>
+            <el-radio :label="2">商品类型</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="商品id" prop="productId">
           <el-input v-model="addForm.productId"></el-input>
@@ -157,14 +153,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="banner类型" prop="bannerType">
-          <el-select v-model="modifyForm.bannerType" placeholder="请选择">
-            <el-option
-                v-for="item in typeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-            </el-option>
-          </el-select>
+          <el-radio-group v-model="modifyForm.bannerType">
+            <el-radio :label="1">商品</el-radio>
+            <el-radio :label="2">商品类型</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="商品id" prop="productId">
           <el-input v-model="modifyForm.productId"></el-input>
@@ -456,7 +448,7 @@ export default {
       const isLt5M = file.size / 1024 / 1024 < 5;
       if (!isLt5M) {
         this.$message.error('上传图片大小不能超过 5MB!');
-        return  isLt5M;
+        return isLt5M;
       }
       this.base64Encoding(file.raw)
       //文件

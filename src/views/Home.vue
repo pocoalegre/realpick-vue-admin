@@ -113,6 +113,7 @@ export default {
         },
       ],
       selfList: [],
+      //选中路径
       activePath: '',
     }
   },

@@ -30,8 +30,6 @@
             <img :src="productSkuImg + scope.row.colorImg" @click="showImg($event)">
           </template>
         </el-table-column>
-        <el-table-column label="售价" prop="sellPrice"></el-table-column>
-        <el-table-column label="库存" prop="stock"></el-table-column>
         <el-table-column label="创建时间">
           <template slot-scope="scope">
             {{scope.row.createTime | dateFormat}}
@@ -81,7 +79,7 @@
         <el-form-item label="商品颜色" prop="skuColor">
           <el-input v-model="addForm.skuColor"></el-input>
         </el-form-item>
-        <!-- 商品图片 -->
+        <!-- sku图片 -->
         <el-form-item label="颜色图片" class="el-form-block-img">
           <img :src="base64Img?base64Img:defaultProductSkuImg" class="avatar" @click="showImg($event)">
           <el-upload
@@ -92,12 +90,6 @@
               :on-change="onChangeFile">
             <el-button class="choose-file-btn" size="small" slot="trigger">选择文件</el-button>
           </el-upload>
-        </el-form-item>
-        <el-form-item label="售价" prop="sellPrice">
-          <el-input v-model="addForm.sellPrice"></el-input>
-        </el-form-item>
-        <el-form-item label="库存" prop="stock">
-          <el-input v-model="addForm.stock"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -124,7 +116,7 @@
         <el-form-item label="商品颜色" prop="skuColor">
           <el-input v-model="modifyForm.skuColor"></el-input>
         </el-form-item>
-        <!-- 商品图片 -->
+        <!-- sku图片 -->
         <el-form-item label="颜色图片" class="el-form-block-img">
           <img :src="base64Img?base64Img:totalProductSkuImg" class="avatar" @click="showImg($event)">
           <el-upload
@@ -135,12 +127,6 @@
               :on-change="onChangeFile">
             <el-button class="choose-file-btn" size="small" slot="trigger">选择文件</el-button>
           </el-upload>
-        </el-form-item>
-        <el-form-item label="售价" prop="sellPrice">
-          <el-input v-model="modifyForm.sellPrice"></el-input>
-        </el-form-item>
-        <el-form-item label="库存" prop="stock">
-          <el-input v-model="modifyForm.stock"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -199,28 +185,22 @@ export default {
         productId: '',
         skuSize: '',
         skuColor: '',
-        colorImg: '',
-        sellPrice: '',
-        stock: ''
+        colorImg: ''
       },
       //添加表单
       addForm: {
         productId: '',
         skuSize: '',
         skuColor: '',
-        colorImg: '',
-        sellPrice: '',
-        stock: ''
+        colorImg: ''
       },
-      //商品图片对象
+      //商品sku对象
       productSkuObject: {
         skuId: '',
         productId: '',
         skuSize: '',
         skuColor: '',
         colorImg: '',
-        sellPrice: '',
-        stock: '',
         deleted: '',
         createTime: '',
         updateTime: ''
@@ -236,14 +216,6 @@ export default {
         ],
         skuColor: [
           { required: true, message: '请输入商品颜色！', trigger: 'blur' }
-        ],
-        sellPrice: [
-          { required: true, message: '请输入售价！', trigger: 'blur' },
-          { validator: this.checkRules.checkMoney, trigger: 'blur' }
-        ],
-        stock: [
-          { required: true, message: '请输入库存！', trigger: 'blur' },
-          { validator: this.checkRules.checkInt, trigger: 'blur' }
         ]
       },
       //添加规则
@@ -257,14 +229,6 @@ export default {
         ],
         skuColor: [
           { required: true, message: '请输入商品颜色！', trigger: 'blur' },
-        ],
-        sellPrice: [
-          { required: true, message: '请输入售价！', trigger: 'blur' },
-          { validator: this.checkRules.checkMoney, trigger: 'blur' }
-        ],
-        stock: [
-          { required: true, message: '请输入库存！', trigger: 'blur' },
-          { validator: this.checkRules.checkInt, trigger: 'blur' }
         ]
       }
     }
@@ -311,8 +275,6 @@ export default {
           that.modifyForm.skuSize = res.data.data.skuSize
           that.modifyForm.skuColor = res.data.data.skuColor
           that.modifyForm.colorImg = res.data.data.colorImg
-          that.modifyForm.sellPrice = res.data.data.sellPrice
-          that.modifyForm.stock = res.data.data.stock
           that.totalProductSkuImg = that.productSkuImg + that.modifyForm.colorImg
         }else {
           that.$message.error(res.data.msg)
@@ -420,7 +382,7 @@ export default {
       const isLt5M = file.size / 1024 / 1024 < 5;
       if (!isLt5M) {
         this.$message.error('上传图片大小不能超过 5MB!');
-        return  isLt5M;
+        return isLt5M;
       }
       this.base64Encoding(file.raw)
       //文件
@@ -441,14 +403,12 @@ export default {
       this.$refs.addFormRef.validate(valid => {
         if (valid) {
           const formData = new FormData
-          //商品图片对象
+          //商品sku对象
           that.productSkuObject.skuId = null
           that.productSkuObject.productId = that.addForm.productId
           that.productSkuObject.skuSize = that.addForm.skuSize
           that.productSkuObject.skuColor = that.addForm.skuColor
           that.productSkuObject.colorImg = null
-          that.productSkuObject.sellPrice = that.addForm.sellPrice
-          that.productSkuObject.stock = that.addForm.stock
           that.productSkuObject.deleted = null
           that.productSkuObject.createTime = null
           that.productSkuObject.updateTime = null
@@ -496,8 +456,6 @@ export default {
           that.productSkuObject.skuSize = that.modifyForm.skuSize
           that.productSkuObject.skuColor = that.modifyForm.skuColor
           that.productSkuObject.colorImg = null
-          that.productSkuObject.sellPrice = that.modifyForm.sellPrice
-          that.productSkuObject.stock = that.modifyForm.stock
           that.productSkuObject.deleted = null
           that.productSkuObject.createTime = null
           that.productSkuObject.updateTime = null
