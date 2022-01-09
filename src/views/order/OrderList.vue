@@ -21,7 +21,8 @@
           </el-select>
         </el-col>
         <el-col :span="5">
-          <el-input placeholder="请输入查询信息" v-model="queryInfo" @keyup.enter.native="getOrderList" clearable @clear="getOrderList" >
+          <el-input placeholder="请输入查询信息" v-model="queryInfo" @keyup.enter.native="getOrderList" clearable
+                    @clear="getOrderList">
             <el-button slot="append" icon="el-icon-search" @click="getOrderList"></el-button>
           </el-input>
         </el-col>
@@ -35,7 +36,7 @@
         <el-table-column label="收件人地址" prop="receiverAddr" width="90px"></el-table-column>
         <el-table-column label="支付方式">
           <template slot-scope="scope">
-            {{scope.row.payType | payType}}
+            {{ scope.row.payType | payType }}
           </template>
         </el-table-column>
         <el-table-column label="总价" prop="totalAmount"></el-table-column>
@@ -43,55 +44,57 @@
         <el-table-column label="订单备注" prop="orderRemark" width="140px"></el-table-column>
         <el-table-column label="提交时间" width="140px">
           <template slot-scope="scope">
-            {{scope.row.submitTime | dateFormat}}
+            {{ scope.row.submitTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="取消时间" width="140px">
           <template slot-scope="scope">
-            {{scope.row.cancelTime | dateFormat}}
+            {{ scope.row.cancelTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="支付时间" width="140px">
           <template slot-scope="scope">
-            {{scope.row.payTime | dateFormat}}
+            {{ scope.row.payTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="发货时间" width="140px">
           <template slot-scope="scope">
-            {{scope.row.deliverTime | dateFormat}}
+            {{ scope.row.deliverTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="收货时间" width="140px">
           <template slot-scope="scope">
-            {{scope.row.receiveTime | dateFormat}}
+            {{ scope.row.receiveTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="完成时间" width="140px">
           <template slot-scope="scope">
-            {{scope.row.finishTime | dateFormat}}
+            {{ scope.row.finishTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="订单状态">
           <template slot-scope="scope">
-            {{scope.row.status | status}}
+            {{ scope.row.status | status }}
           </template>
         </el-table-column>
         <el-table-column label="创建时间" width="140px">
           <template slot-scope="scope">
-            {{scope.row.createTime | dateFormat}}
+            {{ scope.row.createTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="更新时间" width="140px">
           <template slot-scope="scope">
-            {{scope.row.updateTime | dateFormat}}
+            {{ scope.row.updateTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="操作" width="143px" fixed="right">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
-            <el-button type="primary" icon="el-icon-edit" size="medium" @click="showModifyDialog(scope.row.orderId)"></el-button>
+            <el-button type="primary" icon="el-icon-edit" size="medium"
+                       @click="showModifyDialog(scope.row.orderId)"></el-button>
             <!-- 删除按钮 -->
-            <el-button type="danger" icon="el-icon-delete" size="medium" @click="deleteOrderById(scope.row.orderId)"></el-button>
+            <el-button type="danger" icon="el-icon-delete" size="medium"
+                       @click="deleteOrderById(scope.row.orderId)"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -114,7 +117,8 @@
         @close="modifyDialogClosed"
         :close-on-click-modal="false">
       <!-- 订单修改 -->
-      <el-form :model="modifyForm" :rules="modifyFormRules" ref="modifyFormRef" label-width="100px" class="el-form-block">
+      <el-form :model="modifyForm" :rules="modifyFormRules" ref="modifyFormRef" label-width="100px"
+               class="el-form-block">
         <!-- 订单信息 -->
         <el-form-item label="订单号">
           <el-input v-model="modifyForm.orderNumber" disabled></el-input>
@@ -193,14 +197,14 @@ export default {
       //修改规则
       modifyFormRules: {
         receiverName: [
-          { required: true, message: '请输入收件人姓名！', trigger: 'blur' },
+          {required: true, message: '请输入收件人姓名！', trigger: 'blur'},
         ],
         receiverTel: [
-          { required: true, message: '请输入收件人电话！', trigger: 'blur' },
-          { validator: this.checkRules.checkTel, trigger: 'blur' }
+          {required: true, message: '请输入收件人电话！', trigger: 'blur'},
+          {validator: this.checkRules.checkTel, trigger: 'blur'}
         ],
         receiverAddr: [
-          { required: true, message: '请输入收件人地址！', trigger: 'blur' },
+          {required: true, message: '请输入收件人地址！', trigger: 'blur'},
         ]
       },
     }
@@ -222,10 +226,10 @@ export default {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.orderList = res.data.data.list
           that.total = res.data.data.total
-        }else {
+        } else {
           that.$message.error(res.data.msg)
         }
       })
@@ -243,14 +247,14 @@ export default {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.modifyForm.orderNumber = res.data.data.orderNumber
           that.modifyForm.userId = res.data.data.userId
           that.modifyForm.receiverName = res.data.data.receiverName
           that.modifyForm.receiverTel = res.data.data.receiverTel
           that.modifyForm.receiverAddr = res.data.data.receiverAddr
           that.modifyForm.orderRemark = res.data.data.orderRemark
-        }else {
+        } else if (res.data.code === 10001) {
           that.$message.error(res.data.msg)
         }
       })
@@ -284,10 +288,10 @@ export default {
             token: that.$cookie.get('adminToken')
           }
         }).then(res => {
-          if (res.data.code === 10000){
+          if (res.data.code === 10000) {
             that.$message.success(res.data.msg)
             that.getOrderList()
-          }else if (res.data.code === 10001){
+          } else if (res.data.code === 10001) {
             that.$message.error(res.data.msg)
           }
         })
@@ -313,7 +317,7 @@ export default {
     modifyOrder() {
       const that = this
       this.$refs.modifyFormRef.validate(valid => {
-        if (valid){
+        if (valid) {
           axios({
             method: 'put',
             url: '/order/modify',
@@ -324,18 +328,18 @@ export default {
               receiverAddr: that.modifyForm.receiverAddr,
               orderRemark: that.modifyForm.orderRemark,
             },
-            headers:{
+            headers: {
               token: this.$cookie.get("adminToken")
             }
           }).then(res => {
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               //关闭对话框重置回显
               that.modifyDialogVisible = false
               //刷新数据列表
               that.getOrderList()
               //提示修改成功
               that.$message.success(res.data.msg)
-            }else if (res.data.code === 10001){
+            } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
           })
@@ -345,21 +349,21 @@ export default {
   },
   filters: {
     payType(data) {
-      if (data === 1){
+      if (data === 1) {
         return '支付宝'
       }
     },
     status(data) {
       //0：已取消，1：待支付，2：待发货，3：待收货，4：已完成
-      if (data === 0){
+      if (data === 0) {
         return '已取消'
-      }else if (data === 1){
+      } else if (data === 1) {
         return '待支付'
-      }else if (data === 2){
+      } else if (data === 2) {
         return '待发货'
-      }else if (data === 3){
+      } else if (data === 3) {
         return '待收货'
-      }else if (data === 4){
+      } else if (data === 4) {
         return '已完成'
       }
     }

@@ -11,7 +11,8 @@
       <!-- 搜索与添加 -->
       <el-row :gutter="20">
         <el-col :span="4" class="option-query">
-          <el-select v-model="queryCom" placeholder="请选择快递公司" clearable @clear="getDeliveryList" @change="getDeliveryList">
+          <el-select v-model="queryCom" placeholder="请选择快递公司" clearable @clear="getDeliveryList"
+                     @change="getDeliveryList">
             <el-option
                 v-for="item in comOptions"
                 :key="item.value"
@@ -21,7 +22,8 @@
           </el-select>
         </el-col>
         <el-col :span="4" class="option-query">
-          <el-select v-model="queryType" placeholder="请选择查询类型" clearable @clear="getDeliveryList" @change="getDeliveryList">
+          <el-select v-model="queryType" placeholder="请选择查询类型" clearable @clear="getDeliveryList"
+                     @change="getDeliveryList">
             <el-option
                 v-for="item in typeOptions"
                 :key="item.value"
@@ -31,7 +33,8 @@
           </el-select>
         </el-col>
         <el-col :span="5">
-          <el-input placeholder="请输入查询信息" v-model="queryInfo" @keyup.enter.native="getDeliveryList" clearable @clear="getDeliveryList" >
+          <el-input placeholder="请输入查询信息" v-model="queryInfo" @keyup.enter.native="getDeliveryList" clearable
+                    @clear="getDeliveryList">
             <el-button slot="append" icon="el-icon-search" @click="getDeliveryList"></el-button>
           </el-input>
         </el-col>
@@ -46,27 +49,30 @@
         <el-table-column label="快递单号" prop="deliveryNu"></el-table-column>
         <el-table-column label="快递公司">
           <template slot-scope="scope">
-            {{scope.row.deliveryCom | deliveryFormat}}
+            {{ scope.row.deliveryCom | deliveryFormat }}
           </template>
         </el-table-column>
         <el-table-column label="创建时间">
           <template slot-scope="scope">
-            {{scope.row.createTime | dateFormat}}
+            {{ scope.row.createTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="更新时间">
           <template slot-scope="scope">
-            {{scope.row.updateTime | dateFormat}}
+            {{ scope.row.updateTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="操作" width="209px" fixed="right">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
-            <el-button type="primary" icon="el-icon-edit" size="medium" @click="showModifyDialog(scope.row.deliveryId)"></el-button>
+            <el-button type="primary" icon="el-icon-edit" size="medium"
+                       @click="showModifyDialog(scope.row.deliveryId)"></el-button>
             <!-- 删除按钮 -->
-            <el-button type="danger" icon="el-icon-delete" size="medium" @click="deleteDeliveryById(scope.row.deliveryId)"></el-button>
+            <el-button type="danger" icon="el-icon-delete" size="medium"
+                       @click="deleteDeliveryById(scope.row.deliveryId)"></el-button>
             <!-- 查询物流 -->
-            <el-button type="primary" icon="el-icon-search" size="medium" @click="queryDeliveryUrl(scope.row.deliveryNu, scope.row.deliveryCom)"></el-button>
+            <el-button type="primary" icon="el-icon-search" size="medium"
+                       @click="queryDeliveryUrl(scope.row.deliveryNu, scope.row.deliveryCom)"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -121,7 +127,8 @@
         @close="modifyDialogClosed"
         :close-on-click-modal="false">
       <!-- 信息修改 -->
-      <el-form :model="modifyForm" :rules="modifyFormRules" ref="modifyFormRef" label-width="100px" class="el-form-block">
+      <el-form :model="modifyForm" :rules="modifyFormRules" ref="modifyFormRef" label-width="100px"
+               class="el-form-block">
         <!-- 快递信息 -->
         <el-form-item label="订单编号" prop="orderId">
           <el-input v-model="modifyForm.orderId"></el-input>
@@ -224,29 +231,29 @@ export default {
       //修改规则
       modifyFormRules: {
         orderId: [
-          { required: true, message: '请输入订单编号！', trigger: 'blur' },
-          { validator: this.checkRules.checkId, trigger: 'blur' }
+          {required: true, message: '请输入订单编号！', trigger: 'blur'},
+          {validator: this.checkRules.checkId, trigger: 'blur'}
         ],
         deliveryNu: [
-          { required: true, message: '请输入快递单号！', trigger: 'blur' },
-          { validator: this.checkRules.checkNu, trigger: 'blur' }
+          {required: true, message: '请输入快递单号！', trigger: 'blur'},
+          {validator: this.checkRules.checkNu, trigger: 'blur'}
         ],
         deliveryCom: [
-          { required: true, message: '请选择快递公司！'}
+          {required: true, message: '请选择快递公司！'}
         ],
       },
       //添加规则
       addFormRules: {
         orderId: [
-          { required: true, message: '请输入订单编号！', trigger: 'blur' },
-          { validator: this.checkRules.checkId, trigger: 'blur' }
+          {required: true, message: '请输入订单编号！', trigger: 'blur'},
+          {validator: this.checkRules.checkId, trigger: 'blur'}
         ],
         deliveryNu: [
-          { required: true, message: '请输入快递单号！', trigger: 'blur' },
-          { validator: this.checkRules.checkNu, trigger: 'blur' }
+          {required: true, message: '请输入快递单号！', trigger: 'blur'},
+          {validator: this.checkRules.checkNu, trigger: 'blur'}
         ],
         deliveryCom: [
-          { required: true, message: '请选择快递公司！'}
+          {required: true, message: '请选择快递公司！'}
         ],
       }
     }
@@ -269,10 +276,10 @@ export default {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.deliveryList = res.data.data.list
           that.total = res.data.data.total
-        }else {
+        } else {
           that.$message.error(res.data.msg)
         }
       })
@@ -296,10 +303,10 @@ export default {
             token: that.$cookie.get('adminToken')
           }
         }).then(res => {
-          if (res.data.code === 10000){
+          if (res.data.code === 10000) {
             that.$message.success(res.data.msg)
             that.getDeliveryList()
-          }else if (res.data.code === 10001){
+          } else if (res.data.code === 10001) {
             that.$message.error(res.data.msg)
           }
         })
@@ -359,11 +366,11 @@ export default {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.modifyForm.orderId = res.data.data.orderId
           that.modifyForm.deliveryNu = res.data.data.deliveryNu
           that.modifyForm.deliveryCom = res.data.data.deliveryCom
-        }else {
+        } else if (res.data.code === 10001) {
           that.$message.error(res.data.msg)
         }
       })
@@ -372,7 +379,7 @@ export default {
     addDelivery() {
       const that = this
       this.$refs.addFormRef.validate(valid => {
-        if (valid){
+        if (valid) {
           axios({
             method: 'post',
             url: '/delivery/add',
@@ -381,18 +388,18 @@ export default {
               deliveryNu: that.addForm.deliveryNu,
               deliveryCom: that.addForm.deliveryCom,
             },
-            headers:{
+            headers: {
               token: this.$cookie.get("adminToken")
             }
           }).then(res => {
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               //关闭对话框重置回显
               that.addDialogVisible = false
               //刷新数据列表
               that.getDeliveryList()
               //提示修改成功
               that.$message.success(res.data.msg)
-            }else if (res.data.code === 10001){
+            } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
           })
@@ -403,7 +410,7 @@ export default {
     modifyDelivery() {
       const that = this
       this.$refs.modifyFormRef.validate(valid => {
-        if (valid){
+        if (valid) {
           axios({
             method: 'put',
             url: '/delivery/modify',
@@ -413,18 +420,18 @@ export default {
               deliveryNu: that.modifyForm.deliveryNu,
               deliveryCom: that.modifyForm.deliveryCom,
             },
-            headers:{
+            headers: {
               token: this.$cookie.get("adminToken")
             }
           }).then(res => {
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               //关闭对话框重置回显
               that.modifyDialogVisible = false
               //刷新数据列表
               that.getDeliveryList()
               //提示修改成功
               that.$message.success(res.data.msg)
-            }else if (res.data.code === 10001){
+            } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
           })

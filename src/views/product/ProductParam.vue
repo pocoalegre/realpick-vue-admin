@@ -11,7 +11,8 @@
       <!-- 搜索与添加 -->
       <el-row :gutter="20">
         <el-col :span="5">
-          <el-input placeholder="请输入商品编号" v-model="queryProductId" @keyup.enter.native="getProductParamList" clearable @clear="getProductParamList" >
+          <el-input placeholder="请输入商品编号" v-model="queryProductId" @keyup.enter.native="getProductParamList" clearable
+                    @clear="getProductParamList">
             <el-button slot="append" icon="el-icon-search" @click="getProductParamList"></el-button>
           </el-input>
         </el-col>
@@ -27,20 +28,22 @@
         <el-table-column label="参数值" prop="paramValue"></el-table-column>
         <el-table-column label="创建时间">
           <template slot-scope="scope">
-            {{scope.row.createTime | dateFormat}}
+            {{ scope.row.createTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="更新时间">
           <template slot-scope="scope">
-            {{scope.row.updateTime | dateFormat}}
+            {{ scope.row.updateTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="操作" width="143px" fixed="right">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
-            <el-button type="primary" icon="el-icon-edit" size="medium" @click="showModifyDialog(scope.row.paramId)"></el-button>
+            <el-button type="primary" icon="el-icon-edit" size="medium"
+                       @click="showModifyDialog(scope.row.paramId)"></el-button>
             <!-- 删除按钮 -->
-            <el-button type="danger" icon="el-icon-delete" size="medium" @click="deleteProductParamById(scope.row.paramId)"></el-button>
+            <el-button type="danger" icon="el-icon-delete" size="medium"
+                       @click="deleteProductParamById(scope.row.paramId)"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -88,7 +91,8 @@
         @close="modifyDialogClosed"
         :close-on-click-modal="false">
       <!-- 信息修改 -->
-      <el-form :model="modifyForm" :rules="modifyFormRules" ref="modifyFormRef" label-width="100px" class="el-form-block">
+      <el-form :model="modifyForm" :rules="modifyFormRules" ref="modifyFormRef" label-width="100px"
+               class="el-form-block">
         <!-- 商品参数信息 -->
         <el-form-item label="商品编号" prop="productId">
           <el-input v-model="modifyForm.productId"></el-input>
@@ -146,27 +150,27 @@ export default {
       //修改规则
       modifyFormRules: {
         productId: [
-          { required: true, message: '请输入商品编号！', trigger: 'blur' },
-          { validator: this.checkRules.checkId, trigger: 'blur' }
+          {required: true, message: '请输入商品编号！', trigger: 'blur'},
+          {validator: this.checkRules.checkId, trigger: 'blur'}
         ],
         paramKey: [
-          { required: true, message: '请输入参数属性！', trigger: 'blur' },
+          {required: true, message: '请输入参数属性！', trigger: 'blur'},
         ],
         paramValue: [
-          { required: true, message: '请输入参数值！', trigger: 'blur' },
+          {required: true, message: '请输入参数值！', trigger: 'blur'},
         ]
       },
       //添加规则
       addFormRules: {
         productId: [
-          { required: true, message: '请输入商品编号！', trigger: 'blur' },
-          { validator: this.checkRules.checkId, trigger: 'blur' }
+          {required: true, message: '请输入商品编号！', trigger: 'blur'},
+          {validator: this.checkRules.checkId, trigger: 'blur'}
         ],
         paramKey: [
-          { required: true, message: '请输入参数属性！', trigger: 'blur' },
+          {required: true, message: '请输入参数属性！', trigger: 'blur'},
         ],
         paramValue: [
-          { required: true, message: '请输入参数值！', trigger: 'blur' },
+          {required: true, message: '请输入参数值！', trigger: 'blur'},
         ]
       }
     }
@@ -187,10 +191,10 @@ export default {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.productParamList = res.data.data.list
           that.total = res.data.data.total
-        }else {
+        } else if (res.data.code === 10001) {
           that.$message.error(res.data.msg)
         }
       })
@@ -208,11 +212,11 @@ export default {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.modifyForm.productId = res.data.data.productId
           that.modifyForm.paramKey = res.data.data.paramKey
           that.modifyForm.paramValue = res.data.data.paramValue
-        }else {
+        } else if (res.data.code === 10001) {
           that.$message.error(res.data.msg)
         }
       })
@@ -246,10 +250,10 @@ export default {
             token: that.$cookie.get('adminToken')
           }
         }).then(res => {
-          if (res.data.code === 10000){
+          if (res.data.code === 10000) {
             that.$message.success(res.data.msg)
             that.getProductParamList()
-          }else if (res.data.code === 10001){
+          } else if (res.data.code === 10001) {
             that.$message.error(res.data.msg)
           }
         })
@@ -288,7 +292,7 @@ export default {
     addProductParam() {
       const that = this
       this.$refs.addFormRef.validate(valid => {
-        if (valid){
+        if (valid) {
           axios({
             method: 'post',
             url: '/productParam/add',
@@ -297,18 +301,18 @@ export default {
               paramKey: that.addForm.paramKey,
               paramValue: that.addForm.paramValue,
             },
-            headers:{
+            headers: {
               token: this.$cookie.get("adminToken")
             }
           }).then(res => {
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               //关闭对话框重置回显
               that.addDialogVisible = false
               //刷新数据列表
               that.getProductParamList()
               //提示修改成功
               that.$message.success(res.data.msg)
-            }else if (res.data.code === 10001){
+            } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
           })
@@ -319,7 +323,7 @@ export default {
     modifyProductParam() {
       const that = this
       this.$refs.modifyFormRef.validate(valid => {
-        if (valid){
+        if (valid) {
           axios({
             method: 'put',
             url: '/productParam/modify',
@@ -329,18 +333,18 @@ export default {
               paramKey: that.modifyForm.paramKey,
               paramValue: that.modifyForm.paramValue,
             },
-            headers:{
+            headers: {
               token: this.$cookie.get("adminToken")
             }
           }).then(res => {
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               //关闭对话框重置回显
               that.modifyDialogVisible = false
               //刷新数据列表
               that.getProductParamList()
               //提示修改成功
               that.$message.success(res.data.msg)
-            }else if (res.data.code === 10001){
+            } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
           })

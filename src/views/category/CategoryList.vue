@@ -11,7 +11,8 @@
       <!-- 搜索与添加 -->
       <el-row :gutter="20">
         <el-col :span="4" class="option-query">
-          <el-select v-model="queryLevel" placeholder="请选择商品类型等级" clearable @clear="getCategoryList" @change="getCategoryList">
+          <el-select v-model="queryLevel" placeholder="请选择商品类型等级" clearable @clear="getCategoryList"
+                     @change="getCategoryList">
             <el-option
                 v-for="item in levelOptions"
                 :key="item.value"
@@ -21,7 +22,8 @@
           </el-select>
         </el-col>
         <el-col :span="4" class="option-query">
-          <el-select v-model="queryType" placeholder="请选择查询类型" clearable @clear="getCategoryList" @change="getCategoryList">
+          <el-select v-model="queryType" placeholder="请选择查询类型" clearable @clear="getCategoryList"
+                     @change="getCategoryList">
             <el-option
                 v-for="item in typeOptions"
                 :key="item.value"
@@ -31,7 +33,8 @@
           </el-select>
         </el-col>
         <el-col :span="5">
-          <el-input placeholder="请输入查询信息" v-model="queryInfo" @keyup.enter.native="getCategoryList" clearable @clear="getCategoryList" >
+          <el-input placeholder="请输入查询信息" v-model="queryInfo" @keyup.enter.native="getCategoryList" clearable
+                    @clear="getCategoryList">
             <el-button slot="append" icon="el-icon-search" @click="getCategoryList"></el-button>
           </el-input>
         </el-col>
@@ -45,7 +48,7 @@
         <el-table-column label="商品类型名" prop="categoryName"></el-table-column>
         <el-table-column label="商品类型等级">
           <template slot-scope="scope">
-            <el-tag>{{scope.row.categoryLevel | categoryLevel}}</el-tag>
+            <el-tag>{{ scope.row.categoryLevel | categoryLevel }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="商品类型父编号" prop="parentId"></el-table-column>
@@ -56,20 +59,22 @@
         </el-table-column>
         <el-table-column label="创建时间">
           <template slot-scope="scope">
-            {{scope.row.createTime | dateFormat}}
+            {{ scope.row.createTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="更新时间">
           <template slot-scope="scope">
-            {{scope.row.updateTime | dateFormat}}
+            {{ scope.row.updateTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="操作" width="143px" fixed="right">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
-            <el-button type="primary" icon="el-icon-edit" size="medium" @click="showModifyDialog(scope.row.categoryId)"></el-button>
+            <el-button type="primary" icon="el-icon-edit" size="medium"
+                       @click="showModifyDialog(scope.row.categoryId)"></el-button>
             <!-- 删除按钮 -->
-            <el-button type="danger" icon="el-icon-delete" size="medium" @click="deleteCategoryById(scope.row.categoryId)"></el-button>
+            <el-button type="danger" icon="el-icon-delete" size="medium"
+                       @click="deleteCategoryById(scope.row.categoryId)"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -136,7 +141,8 @@
         @close="modifyDialogClosed"
         :close-on-click-modal="false">
       <!-- 修改信息 -->
-      <el-form :model="modifyForm" :rules="modifyFormRules" ref="modifyFormRef" label-width="120px" class="el-form-block">
+      <el-form :model="modifyForm" :rules="modifyFormRules" ref="modifyFormRef" label-width="120px"
+               class="el-form-block">
         <!-- 商品类型信息 -->
         <el-form-item label="商品类型名" prop="categoryName">
           <el-input v-model="modifyForm.categoryName"></el-input>
@@ -156,7 +162,8 @@
         </el-form-item>
         <!-- 商品类型图片 -->
         <el-form-item label="商品类型图片" class="category-img" v-show="modifyForm.categoryLevel===1">
-          <img :src="base64Img?base64Img:this.modifyForm.imgUrl?totalCategoryImg:defaultCategoryImg" class="avatar" @click="showImg($event)">
+          <img :src="base64Img?base64Img:this.modifyForm.imgUrl?totalCategoryImg:defaultCategoryImg" class="avatar"
+               @click="showImg($event)">
           <el-upload
               action=""
               :auto-upload="false"
@@ -272,25 +279,25 @@ export default {
       //修改规则
       modifyFormRules: {
         categoryName: [
-          { required: true, message: '请输入商品类型名！'}
+          {required: true, message: '请输入商品类型名！'}
         ],
         categoryLevel: [
-          { required: true, message: '请选择商品类型等级！'}
+          {required: true, message: '请选择商品类型等级！'}
         ],
         parentId: [
-          { validator: this.checkRules.checkIdNull, trigger: 'blur' }
+          {validator: this.checkRules.checkIdNull, trigger: 'blur'}
         ]
       },
       //添加规则
       addFormRules: {
         categoryName: [
-          { required: true, message: '请输入商品类型名！'}
+          {required: true, message: '请输入商品类型名！'}
         ],
         categoryLevel: [
-          { required: true, message: '请选择商品类型等级！'}
+          {required: true, message: '请选择商品类型等级！'}
         ],
         parentId: [
-          { validator: this.checkRules.checkIdNull, trigger: 'blur' }
+          {validator: this.checkRules.checkIdNull, trigger: 'blur'}
         ]
       },
     }
@@ -312,10 +319,10 @@ export default {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.categoryList = res.data.data.list
           that.total = res.data.data.total
-        }else {
+        } else if (res.data.code === 10001) {
           that.$message.error(res.data.msg)
         }
       })
@@ -349,10 +356,10 @@ export default {
             token: that.$cookie.get('adminToken')
           }
         }).then(res => {
-          if (res.data.code === 10000){
+          if (res.data.code === 10000) {
             that.$message.success(res.data.msg)
             that.getCategoryList()
-          }else if (res.data.code === 10001){
+          } else if (res.data.code === 10001) {
             that.$message.error(res.data.msg)
           }
         })
@@ -383,13 +390,13 @@ export default {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.modifyForm.categoryName = res.data.data.categoryName
           that.modifyForm.categoryLevel = res.data.data.categoryLevel
           that.modifyForm.parentId = res.data.data.parentId
           that.modifyForm.imgUrl = res.data.data.imgUrl
           that.totalCategoryImg = that.categoryImg + that.modifyForm.imgUrl
-        }else {
+        } else if (res.data.code === 10001) {
           that.$message.error(res.data.msg)
         }
       })
@@ -399,18 +406,18 @@ export default {
       const that = this
       this.$refs.modifyFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //监听添加对话框关闭事件
     addDialogClosed() {
       const that = this
       this.$refs.addFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //选择文件后
     onChangeFile(file) {
@@ -436,7 +443,7 @@ export default {
     addCategory() {
       const that = this
       this.$refs.addFormRef.validate(valid => {
-        if (valid){
+        if (valid) {
           const formData = new FormData
           //商品类型对象
           that.categoryObject.categoryId = null
@@ -455,12 +462,12 @@ export default {
             method: 'post',
             url: '/category/add',
             data: formData,
-            headers:{
+            headers: {
               'ContentType': 'multipart/form-data',
               token: this.$cookie.get("adminToken")
             }
           }).then(res => {
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               //关闭对话框，重置回显
               that.addDialogVisible = false
               //刷新数据列表
@@ -469,10 +476,10 @@ export default {
               that.$message.success(res.data.msg)
               //成功重置表单
               that.file = null
-              setTimeout(function (){
+              setTimeout(function () {
                 that.base64Img = null
-              },200)
-            }else if (res.data.code === 10001){
+              }, 200)
+            } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
           })
@@ -483,7 +490,7 @@ export default {
     modifyCategory() {
       const that = this
       this.$refs.modifyFormRef.validate(valid => {
-        if (valid){
+        if (valid) {
           const formData = new FormData
           //商品类型对象
           that.categoryObject.categoryId = that.modifyForm.categoryId
@@ -502,12 +509,12 @@ export default {
             method: 'put',
             url: '/category/modify',
             data: formData,
-            headers:{
+            headers: {
               'ContentType': 'multipart/form-data',
               token: this.$cookie.get("adminToken")
             }
           }).then(res => {
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               //关闭对话框，重置回显
               that.modifyDialogVisible = false
               //刷新数据列表
@@ -516,10 +523,10 @@ export default {
               that.$message.success(res.data.msg)
               //成功重置表单
               that.file = null
-              setTimeout(function (){
+              setTimeout(function () {
                 that.base64Img = null
-              },200)
-            }else if (res.data.code === 10001){
+              }, 200)
+            } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
           })
@@ -532,9 +539,9 @@ export default {
       this.addDialogVisible = false
       this.$refs.addFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //取消修改
     cancelModify() {
@@ -542,9 +549,9 @@ export default {
       this.modifyDialogVisible = false
       this.$refs.modifyFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //图片预览
     showImg(e) {
@@ -558,9 +565,9 @@ export default {
   },
   filters: {
     categoryLevel(data) {
-      if (data === 1){
+      if (data === 1) {
         return '一级分类'
-      }else if (data === 2){
+      } else if (data === 2) {
         return '二级分类'
       }
     }

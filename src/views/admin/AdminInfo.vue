@@ -20,12 +20,12 @@
         </el-table-column>
         <el-table-column label="创建时间">
           <template slot-scope="scope">
-            {{scope.row.createTime | dateFormat}}
+            {{ scope.row.createTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="更新时间">
           <template slot-scope="scope">
-            {{scope.row.updateTime | dateFormat}}
+            {{ scope.row.updateTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="操作" width="143px" fixed="right">
@@ -33,7 +33,8 @@
             <!-- 修改按钮 -->
             <el-button type="primary" icon="el-icon-edit" size="medium" @click="showModifyDialog"></el-button>
             <!-- 删除按钮 -->
-            <el-button type="danger" icon="el-icon-delete" size="medium" @click="deleteAdminById(scope.row.adminId)"></el-button>
+            <el-button type="danger" icon="el-icon-delete" size="medium"
+                       @click="deleteAdminById(scope.row.adminId)"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -113,11 +114,11 @@ export default {
       //修改对话框显示与隐藏
       modifyDialogVisible: false,
       //表单验证规则对象
-      modifyFormRules:{
+      modifyFormRules: {
         //验证管理员昵称是否合法
-        adminNickname:[
-          { required: true, message: '请输入管理员昵称！', trigger: 'blur' },
-          { validator: this.checkRules.checkNickname, trigger: 'blur' }
+        adminNickname: [
+          {required: true, message: '请输入管理员昵称！', trigger: 'blur'},
+          {validator: this.checkRules.checkNickname, trigger: 'blur'}
         ],
       }
     }
@@ -132,9 +133,9 @@ export default {
       const that = this
       this.$refs.modifyFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //获取当前管理员
     getAdmin() {
@@ -149,13 +150,13 @@ export default {
           token: this.$cookie.get('adminToken')
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.admin = res.data.data
           that.modifyForm.adminName = res.data.data[0].adminName
           that.modifyForm.adminNickname = res.data.data[0].adminNickname
           that.modifyForm.adminImg = res.data.data[0].adminImg
           that.totalAdminImg = that.adminHeadImg + that.modifyForm.adminImg
-        } else {
+        } else if (res.data.code === 10001) {
           that.$message.error(res.data.msg)
         }
       })
@@ -164,7 +165,7 @@ export default {
     adminModify() {
       const that = this
       this.$refs.modifyFormRef.validate(valid => {
-        if (valid){
+        if (valid) {
           axios({
             method: 'put',
             url: '/admin/modify',
@@ -172,11 +173,11 @@ export default {
               adminId: this.admin[0].adminId,
               adminNickname: this.modifyForm.adminNickname,
             },
-            headers:{
+            headers: {
               token: this.$cookie.get("adminToken")
             }
           }).then(res => {
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               that.$cookie.set('adminId', res.data.data.adminId, {expires: 1})
               that.$cookie.set('adminNickname', res.data.data.adminNickname, {expires: 1})
               //关闭对话框
@@ -187,10 +188,10 @@ export default {
               that.$message.success(res.data.msg)
               //成功重置表单
               that.file = null
-              setTimeout(function (){
+              setTimeout(function () {
                 that.base64Img = null
-              },200)
-            }else if (res.data.code === 10001){
+              }, 200)
+            } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
           })
@@ -216,10 +217,10 @@ export default {
             token: that.$cookie.get('adminToken')
           }
         }).then(res => {
-          if (res.data.code === 10000){
+          if (res.data.code === 10000) {
             that.$message.success(res.data.msg)
             that.logout()
-          }else if (res.data.code === 10001){
+          } else if (res.data.code === 10001) {
             that.$message.error(res.data.msg)
           }
         })
@@ -232,16 +233,16 @@ export default {
       const that = this
       this.modifyDialogVisible = false
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //选择文件后
     onChangeFile(file) {
       const isLt2M = file.size / 1024 / 1024 < 2;
       if (!isLt2M) {
         this.$message.error('上传图片大小不能超过 2MB!');
-        return  isLt2M;
+        return isLt2M;
       }
       this.base64Encoding(file.raw)
       //文件
@@ -258,9 +259,9 @@ export default {
     },
     //确认修改图片
     confirmChange() {
-      if (Object.keys(this.file).length === 0){
+      if (Object.keys(this.file).length === 0) {
         this.$message.error('请选择文件！')
-      }else {
+      } else {
         const that = this
         //formData对象
         let formData = new FormData

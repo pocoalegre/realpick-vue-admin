@@ -50,9 +50,9 @@ export default {
   data() {
     //确认密码规则
     let confirmPwd = (rule, value, callback) => {
-      if (value !== this.registForm.pwd){
+      if (value !== this.registForm.pwd) {
         callback(new Error('两次输入密码不一致!'));
-      }else {
+      } else {
         callback();
       }
     }
@@ -64,25 +64,25 @@ export default {
         rePwd: ''
       },
       //表单验证规则对象
-      registFormRules:{
+      registFormRules: {
         //验证管理员名是否合法
-        name:[
-          { required: true, message: '请输入管理员名！', trigger: 'blur' },
-          { validator: this.checkRules.checkName, trigger: 'blur' }
+        name: [
+          {required: true, message: '请输入管理员名！', trigger: 'blur'},
+          {validator: this.checkRules.checkName, trigger: 'blur'}
         ],
         //验证密码是否合法
-        pwd:[
-          { required: true, message: '请输入密码！', trigger: 'blur' },
-          { validator: this.checkRules.checkPwd, trigger: 'blur' }
+        pwd: [
+          {required: true, message: '请输入密码！', trigger: 'blur'},
+          {validator: this.checkRules.checkPwd, trigger: 'blur'}
         ],
         rePwd: [
-          { required: true, message: '请确认密码！', trigger: 'blur' },
-          { validator: confirmPwd, trigger: 'blur' }
+          {required: true, message: '请确认密码！', trigger: 'blur'},
+          {validator: confirmPwd, trigger: 'blur'}
         ]
       }
     }
   },
-  methods:{
+  methods: {
     //点击重置按钮，重置表单
     resetLoginForm() {
       this.$refs.registFormRef.resetFields();
@@ -93,7 +93,7 @@ export default {
       this.$refs.registFormRef.validate(valid => {
         if (valid) {
           axios({
-            method:'post',
+            method: 'post',
             url: '/admin/regist',
             params: {
               name: that.registForm.name,
@@ -101,18 +101,18 @@ export default {
             }
           }).then(res => {
             //回调函数判断返回code
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               that.$message.success(res.data.msg)
               //页面跳转
               that.$router.push("/login")
             }
-            if (res.data.code === 10001){
+            if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
               that.resetLoginForm();
             }
           })
         }
-        if (!valid){
+        if (!valid) {
           that.$alert('请输入正确的信息！', '提示', {
             confirmButtonText: '确定',
           })
@@ -128,7 +128,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.regist-container{
+.regist-container {
   height: 100%;
 }
 
@@ -142,10 +142,11 @@ export default {
   top: 50%;
   transform: translate(-50%, -60%);
   box-shadow: 0 0 10px #999999;
+
   span {
     font-size: x-large;
     opacity: 0.7;
-    font-family: 微软雅黑,serif;
+    font-family: 微软雅黑, serif;
     text-align: center;
     display: block;
     margin-top: 30px;

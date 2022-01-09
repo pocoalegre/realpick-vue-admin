@@ -11,7 +11,8 @@
       <!-- 搜索与添加 -->
       <el-row :gutter="20">
         <el-col :span="5">
-          <el-input placeholder="请输入商品编号" v-model="queryProductId" @keyup.enter.native="getProductSkuList" clearable @clear="getProductSkuList" >
+          <el-input placeholder="请输入商品编号" v-model="queryProductId" @keyup.enter.native="getProductSkuList" clearable
+                    @clear="getProductSkuList">
             <el-button slot="append" icon="el-icon-search" @click="getProductSkuList"></el-button>
           </el-input>
         </el-col>
@@ -32,20 +33,22 @@
         </el-table-column>
         <el-table-column label="创建时间">
           <template slot-scope="scope">
-            {{scope.row.createTime | dateFormat}}
+            {{ scope.row.createTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="更新时间">
           <template slot-scope="scope">
-            {{scope.row.updateTime | dateFormat}}
+            {{ scope.row.updateTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="操作" width="143px" fixed="right">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
-            <el-button type="primary" icon="el-icon-edit" size="medium" @click="showModifyDialog(scope.row.skuId)"></el-button>
+            <el-button type="primary" icon="el-icon-edit" size="medium"
+                       @click="showModifyDialog(scope.row.skuId)"></el-button>
             <!-- 删除按钮 -->
-            <el-button type="danger" icon="el-icon-delete" size="medium" @click="deleteProductSkuById(scope.row.skuId)"></el-button>
+            <el-button type="danger" icon="el-icon-delete" size="medium"
+                       @click="deleteProductSkuById(scope.row.skuId)"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -105,7 +108,8 @@
         @close="modifyDialogClosed"
         :close-on-click-modal="false">
       <!-- 信息修改 -->
-      <el-form :model="modifyForm" :rules="modifyFormRules" ref="modifyFormRef" label-width="100px" class="el-form-block">
+      <el-form :model="modifyForm" :rules="modifyFormRules" ref="modifyFormRef" label-width="100px"
+               class="el-form-block">
         <!-- 商品sku信息 -->
         <el-form-item label="商品编号" prop="productId">
           <el-input v-model="modifyForm.productId"></el-input>
@@ -208,27 +212,27 @@ export default {
       //修改规则
       modifyFormRules: {
         productId: [
-          { required: true, message: '请输入商品编号！', trigger: 'blur' },
-          { validator: this.checkRules.checkId, trigger: 'blur' }
+          {required: true, message: '请输入商品编号！', trigger: 'blur'},
+          {validator: this.checkRules.checkId, trigger: 'blur'}
         ],
         skuSize: [
-          { required: true, message: '请输入商品尺寸！', trigger: 'blur' }
+          {required: true, message: '请输入商品尺寸！', trigger: 'blur'}
         ],
         skuColor: [
-          { required: true, message: '请输入商品颜色！', trigger: 'blur' }
+          {required: true, message: '请输入商品颜色！', trigger: 'blur'}
         ]
       },
       //添加规则
       addFormRules: {
         productId: [
-          { required: true, message: '请输入商品编号！', trigger: 'blur' },
-          { validator: this.checkRules.checkId, trigger: 'blur' }
+          {required: true, message: '请输入商品编号！', trigger: 'blur'},
+          {validator: this.checkRules.checkId, trigger: 'blur'}
         ],
         skuSize: [
-          { required: true, message: '请输入商品尺寸！', trigger: 'blur' },
+          {required: true, message: '请输入商品尺寸！', trigger: 'blur'},
         ],
         skuColor: [
-          { required: true, message: '请输入商品颜色！', trigger: 'blur' },
+          {required: true, message: '请输入商品颜色！', trigger: 'blur'},
         ]
       }
     }
@@ -249,10 +253,10 @@ export default {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.productSkuList = res.data.data.list
           that.total = res.data.data.total
-        }else {
+        } else {
           that.$message.error(res.data.msg)
         }
       })
@@ -270,13 +274,13 @@ export default {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.modifyForm.productId = res.data.data.productId
           that.modifyForm.skuSize = res.data.data.skuSize
           that.modifyForm.skuColor = res.data.data.skuColor
           that.modifyForm.colorImg = res.data.data.colorImg
           that.totalProductSkuImg = that.productSkuImg + that.modifyForm.colorImg
-        }else {
+        } else {
           that.$message.error(res.data.msg)
         }
       })
@@ -319,10 +323,10 @@ export default {
             token: that.$cookie.get('adminToken')
           }
         }).then(res => {
-          if (res.data.code === 10000){
+          if (res.data.code === 10000) {
             that.$message.success(res.data.msg)
             that.getProductSkuList()
-          }else if (res.data.code === 10001){
+          } else if (res.data.code === 10001) {
             that.$message.error(res.data.msg)
           }
         })
@@ -345,18 +349,18 @@ export default {
       const that = this
       this.$refs.modifyFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //监听添加对话框关闭事件
     addDialogClosed() {
       const that = this
       this.$refs.addFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //取消添加
     cancelAdd() {
@@ -364,18 +368,18 @@ export default {
       this.addDialogVisible = false
       this.$refs.addFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //取消修改
     cancelModify() {
       const that = this
       this.modifyDialogVisible = false
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //选择文件后
     onChangeFile(file) {
@@ -420,12 +424,12 @@ export default {
             method: 'post',
             url: '/productSku/add',
             data: formData,
-            headers:{
+            headers: {
               'ContentType': 'multipart/form-data',
               token: this.$cookie.get("adminToken")
             }
           }).then(res => {
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               //关闭对话框，重置回显
               that.addDialogVisible = false
               //刷新数据列表
@@ -434,10 +438,10 @@ export default {
               that.$message.success(res.data.msg)
               //成功重置表单
               that.file = null
-              setTimeout(function (){
+              setTimeout(function () {
                 that.base64Img = null
-              },200)
-            }else if (res.data.code === 10001){
+              }, 200)
+            } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
           })
@@ -467,12 +471,12 @@ export default {
             method: 'put',
             url: '/productSku/modify',
             data: formData,
-            headers:{
+            headers: {
               'ContentType': 'multipart/form-data',
               token: this.$cookie.get("adminToken")
             }
           }).then(res => {
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               //关闭对话框，重置回显
               that.modifyDialogVisible = false
               //刷新数据列表
@@ -481,10 +485,10 @@ export default {
               that.$message.success(res.data.msg)
               //成功重置表单
               that.file = null
-              setTimeout(function (){
+              setTimeout(function () {
                 that.base64Img = null
-              },200)
-            }else if (res.data.code === 10001){
+              }, 200)
+            } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
           })

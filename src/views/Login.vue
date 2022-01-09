@@ -51,7 +51,7 @@
 <script>
 export default {
   name: 'Login',
-  created(){
+  created() {
     this.getCode()
   },
   data() {
@@ -63,28 +63,28 @@ export default {
         code: ''
       },
       //表单验证规则对象
-      loginFormRules:{
+      loginFormRules: {
         //验证管理员名是否合法
-        name:[
-          { required: true, message: '请输入管理员名！', trigger: 'blur' },
-          { validator: this.checkRules.checkName, trigger: 'blur' }
+        name: [
+          {required: true, message: '请输入管理员名！', trigger: 'blur'},
+          {validator: this.checkRules.checkName, trigger: 'blur'}
         ],
         //验证密码是否合法
-        pwd:[
-          { required: true, message: '请输入密码！', trigger: 'blur' },
-          { validator: this.checkRules.checkPwd, trigger: 'blur' }
+        pwd: [
+          {required: true, message: '请输入密码！', trigger: 'blur'},
+          {validator: this.checkRules.checkPwd, trigger: 'blur'}
         ],
         //验证验证码是否合法
-        code:[
-          { required: true, message: '请输入验证码！', trigger: 'blur' },
-          { validator: this.checkRules.checkCode, trigger: 'blur' }
+        code: [
+          {required: true, message: '请输入验证码！', trigger: 'blur'},
+          {validator: this.checkRules.checkCode, trigger: 'blur'}
         ]
       },
       //验证码图片
-      codeImg:'',
+      codeImg: '',
     }
   },
-  methods:{
+  methods: {
     //点击重置按钮，重置表单
     resetLoginForm() {
       this.$refs.loginFormRef.resetFields();
@@ -96,7 +96,7 @@ export default {
       this.$refs.loginFormRef.validate(valid => {
         if (valid) {
           axios({
-            method:'get',
+            method: 'get',
             url: '/admin/login',
             params: {
               name: that.loginForm.name,
@@ -105,7 +105,7 @@ export default {
             }
           }).then(res => {
             //回调函数判断返回code
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               that.$message.success(res.data.msg)
               //保存管理员信息和token
               that.$cookie.set('adminToken', res.data.data.token, {expires: 1})
@@ -116,13 +116,13 @@ export default {
               //页面跳转
               that.$router.push("/home")
             }
-            if (res.data.code === 10001){
+            if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
               that.resetLoginForm();
             }
           })
         }
-        if (!valid){
+        if (!valid) {
           that.$alert('请输入正确的信息！', '提示', {
             confirmButtonText: '确定',
           })
@@ -136,9 +136,9 @@ export default {
       axios({
         method: 'get',
         url: '/admin/createCode',
-        responseType:'blob'
+        responseType: 'blob'
       }).then(res => {
-        that.codeImg=window.URL.createObjectURL(res.data)
+        that.codeImg = window.URL.createObjectURL(res.data)
       });
     },
     regist() {
@@ -149,7 +149,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.login-container{
+.login-container {
   height: 100%;
 }
 
@@ -163,10 +163,11 @@ export default {
   top: 50%;
   transform: translate(-50%, -60%);
   box-shadow: 0 0 10px #999999;
+
   span {
     font-size: x-large;
     opacity: 0.7;
-    font-family: 微软雅黑,serif;
+    font-family: 微软雅黑, serif;
     text-align: center;
     display: block;
     margin-top: 30px;
@@ -197,9 +198,11 @@ export default {
   position: absolute;
   margin-top: -65px;
   margin-left: 260px;
+
   img {
     height: 35px;
   }
+
   a {
     font-size: small;
     opacity: 0.7;

@@ -21,7 +21,8 @@
           </el-select>
         </el-col>
         <el-col :span="5">
-          <el-input placeholder="请输入查询信息" v-model="queryInfo" @keyup.enter.native="getUserList" clearable @clear="getUserList" >
+          <el-input placeholder="请输入查询信息" v-model="queryInfo" @keyup.enter.native="getUserList" clearable
+                    @clear="getUserList">
             <el-button slot="append" icon="el-icon-search" @click="getUserList"></el-button>
           </el-input>
         </el-col>
@@ -41,7 +42,7 @@
         </el-table-column>
         <el-table-column label="用户性别">
           <template slot-scope="scope">
-            {{scope.row.userGender | genderFormat}}
+            {{ scope.row.userGender | genderFormat }}
           </template>
         </el-table-column>
         <el-table-column label="用户年龄" prop="userAge"></el-table-column>
@@ -49,20 +50,22 @@
         <el-table-column label="用户邮箱" prop="userEmail"></el-table-column>
         <el-table-column label="创建时间">
           <template slot-scope="scope">
-            {{scope.row.createTime | dateFormat}}
+            {{ scope.row.createTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="更新时间">
           <template slot-scope="scope">
-            {{scope.row.updateTime | dateFormat}}
+            {{ scope.row.updateTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="操作" width="143px" fixed="right">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
-            <el-button type="primary" icon="el-icon-edit" size="medium" @click="showModifyDialog(scope.row.userId)"></el-button>
+            <el-button type="primary" icon="el-icon-edit" size="medium"
+                       @click="showModifyDialog(scope.row.userId)"></el-button>
             <!-- 删除按钮 -->
-            <el-button type="danger" icon="el-icon-delete" size="medium" @click="deleteUserById(scope.row.userId)"></el-button>
+            <el-button type="danger" icon="el-icon-delete" size="medium"
+                       @click="deleteUserById(scope.row.userId)"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -176,9 +179,9 @@ export default {
   data() {
     //确认密码规则
     let confirmPwd = (rule, value, callback) => {
-      if (value !== this.addForm.userPwd){
+      if (value !== this.addForm.userPwd) {
         callback(new Error('两次输入密码不一致!'));
-      }else {
+      } else {
         callback();
       }
     }
@@ -251,33 +254,33 @@ export default {
       //修改表单验证规则
       modifyFormRules: {
         userNickname: [
-          { required: true, message: '请输入用户昵称！', trigger: 'blur' },
-          { validator: this.checkRules.checkNickname, trigger: 'blur' }
+          {required: true, message: '请输入用户昵称！', trigger: 'blur'},
+          {validator: this.checkRules.checkNickname, trigger: 'blur'}
         ],
         userAge: [
-          { validator: this.checkRules.checkAge, trigger: 'blur' }
+          {validator: this.checkRules.checkAge, trigger: 'blur'}
         ],
         userTel: [
-          { validator: this.checkRules.checkTel, trigger: 'blur' }
+          {validator: this.checkRules.checkTel, trigger: 'blur'}
         ],
         userEmail: [
-          { validator: this.checkRules.checkEmail, trigger: 'blur' }
+          {validator: this.checkRules.checkEmail, trigger: 'blur'}
         ],
       },
       //添加表单验证规则
       addFormRules: {
-        userName:[
-          { required: true, message: '请输入用户名！', trigger: 'blur' },
-          { validator: this.checkRules.checkName, trigger: 'blur' }
+        userName: [
+          {required: true, message: '请输入用户名！', trigger: 'blur'},
+          {validator: this.checkRules.checkName, trigger: 'blur'}
         ],
         //验证密码是否合法
-        userPwd:[
-          { required: true, message: '请输入密码！', trigger: 'blur' },
-          { validator: this.checkRules.checkPwd, trigger: 'blur' }
+        userPwd: [
+          {required: true, message: '请输入密码！', trigger: 'blur'},
+          {validator: this.checkRules.checkPwd, trigger: 'blur'}
         ],
         userRePwd: [
-          { required: true, message: '请确认密码！', trigger: 'blur' },
-          { validator: confirmPwd, trigger: 'blur' }
+          {required: true, message: '请确认密码！', trigger: 'blur'},
+          {validator: confirmPwd, trigger: 'blur'}
         ]
       },
       //预览图片
@@ -303,14 +306,14 @@ export default {
           pageNum: this.pageNum,
           pageSize: this.pageSize
         },
-        headers:{
+        headers: {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.userList = res.data.data.list
           that.total = res.data.data.total
-        }else {
+        } else if (res.data.code === 10001) {
           that.$message.error(res.data.msg)
         }
       })
@@ -321,7 +324,7 @@ export default {
       this.getUserList()
     },
     //监听页码值改变事件
-    handleCurrentChange(newPage){
+    handleCurrentChange(newPage) {
       this.pageNum = newPage
       this.getUserList()
     },
@@ -344,10 +347,10 @@ export default {
             token: that.$cookie.get('adminToken')
           }
         }).then(res => {
-          if (res.data.code === 10000){
+          if (res.data.code === 10000) {
             that.$message.success(res.data.msg)
             that.getUserList()
-          }else if (res.data.code === 10001){
+          } else if (res.data.code === 10001) {
             that.$message.error(res.data.msg)
           }
         })
@@ -361,9 +364,9 @@ export default {
       this.modifyDialogVisible = false
       this.$refs.modifyFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //添加取消按钮
     cancelAdd() {
@@ -371,9 +374,9 @@ export default {
       this.addDialogVisible = false
       this.$refs.addFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //单条用户
     getUser(id) {
@@ -388,7 +391,7 @@ export default {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.modifyForm.userName = res.data.data.userName
           that.modifyForm.userNickname = res.data.data.userNickname
           that.modifyForm.userImg = res.data.data.userImg
@@ -397,7 +400,7 @@ export default {
           that.modifyForm.userTel = res.data.data.userTel
           that.modifyForm.userEmail = res.data.data.userEmail
           that.totalUserImg = that.userHeadImg + that.modifyForm.userImg
-        }else {
+        } else if (res.data.code === 10001) {
           that.$message.error(res.data.msg)
         }
       })
@@ -417,25 +420,25 @@ export default {
       const that = this
       this.$refs.modifyFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //监听添加对话框关闭事件
     addDialogClosed() {
       const that = this
       this.$refs.addFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //选择文件后
     onChangeFile(file) {
       const isLt2M = file.size / 1024 / 1024 < 2;
       if (!isLt2M) {
         this.$message.error('上传图片大小不能超过 2MB!');
-        return  isLt2M;
+        return isLt2M;
       }
       this.base64Encoding(file.raw)
       //文件
@@ -452,9 +455,9 @@ export default {
     },
     //确认修改图片
     confirmChange() {
-      if (Object.keys(this.file).length===0){
+      if (Object.keys(this.file).length === 0) {
         this.$message.error('请选择文件！')
-      }else {
+      } else {
         const that = this
         //formData对象
         let formData = new FormData
@@ -488,7 +491,7 @@ export default {
     userModify() {
       const that = this
       this.$refs.modifyFormRef.validate(valid => {
-        if (valid){
+        if (valid) {
           axios({
             method: 'put',
             url: '/user/modify',
@@ -500,11 +503,11 @@ export default {
               userTel: this.modifyForm.userTel,
               userEmail: this.modifyForm.userEmail,
             },
-            headers:{
+            headers: {
               token: this.$cookie.get("adminToken")
             }
           }).then(res => {
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               //关闭对话框，重置回显
               that.modifyDialogVisible = false
               //刷新数据列表
@@ -513,10 +516,10 @@ export default {
               that.$message.success(res.data.msg)
               //成功重置表单
               that.file = null
-              setTimeout(function (){
+              setTimeout(function () {
                 that.base64Img = null
-              },200)
-            }else if (res.data.code === 10001){
+              }, 200)
+            } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
           })
@@ -527,7 +530,7 @@ export default {
     userRegist() {
       const that = this
       this.$refs.addFormRef.validate(valid => {
-        if (valid){
+        if (valid) {
           axios({
             method: 'post',
             url: 'user/regist',
@@ -536,13 +539,13 @@ export default {
               pwd: that.addForm.userPwd
             }
           }).then(res => {
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               that.$message.success(res.data.msg)
               //刷新数据列表
               that.getUserList()
               //关闭窗口
               that.addDialogVisible = false
-            }else {
+            } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
           })

@@ -20,33 +20,33 @@ axios.defaults.baseURL = 'http://localhost:8080'
 
 // 定义全局时间戳过滤器
 Vue.filter('dateFormat', function (value) {
-  if (value !== null){
-    return Moment(value).format('YYYY-MM-DD HH:mm:ss')
-  }
+    if (value !== null) {
+        return Moment(value).format('YYYY-MM-DD HH:mm:ss')
+    }
 })
 //定义全局性别过滤器
 Vue.filter('genderFormat', function (value) {
-  if (value === 'male'){
-    return '男'
-  }else if (value === 'female'){
-    return '女'
-  }else if (value === '' || value === null){
-    return ''
-  }
+    if (value === 'male') {
+        return '男'
+    } else if (value === 'female') {
+        return '女'
+    } else if (value === '' || value === null) {
+        return ''
+    }
 })
 //定义全局快递过滤器
 Vue.filter('deliveryFormat', function (value) {
-  if (value === 'yuantong'){
-    return '圆通速递'
-  }else if (value === 'shunfeng'){
-    return '顺丰速运'
-  }else if (value === 'yunda'){
-    return '韵达快递'
-  }else if (value === 'zhongtong'){
-    return '中通快递'
-  }else if (value === 'shentong'){
-    return '申通快递'
-  }
+    if (value === 'yuantong') {
+        return '圆通速递'
+    } else if (value === 'shunfeng') {
+        return '顺丰速运'
+    } else if (value === 'yunda') {
+        return '韵达快递'
+    } else if (value === 'zhongtong') {
+        return '中通快递'
+    } else if (value === 'shentong') {
+        return '申通快递'
+    }
 })
 
 Vue.prototype.baseUrl = 'http://localhost:8080'
@@ -63,8 +63,8 @@ Vue.prototype.checkRules = checkRules
 Vue.config.productionTip = false
 
 let vm = new Vue({
-  router,
-  render: h => h(App)
+    router,
+    render: h => h(App)
 }).$mount('#app')
 
 export default vm

@@ -11,7 +11,8 @@
       <!-- 搜索与添加 -->
       <el-row :gutter="20">
         <el-col :span="5">
-          <el-input placeholder="请输入订单编号" v-model="queryOrderId" @keyup.enter.native="getOrderDetailList" clearable @clear="getOrderDetailList" >
+          <el-input placeholder="请输入订单编号" v-model="queryOrderId" @keyup.enter.native="getOrderDetailList" clearable
+                    @clear="getOrderDetailList">
             <el-button slot="append" icon="el-icon-search" @click="getOrderDetailList"></el-button>
           </el-input>
         </el-col>
@@ -40,12 +41,12 @@
         <el-table-column label="单品总价" prop="totalAmount"></el-table-column>
         <el-table-column label="创建时间" width="140px">
           <template slot-scope="scope">
-            {{scope.row.createTime | dateFormat}}
+            {{ scope.row.createTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="更新时间" width="140px">
           <template slot-scope="scope">
-            {{scope.row.updateTime | dateFormat}}
+            {{ scope.row.updateTime | dateFormat }}
           </template>
         </el-table-column>
       </el-table>
@@ -111,10 +112,10 @@ export default {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.orderDetailList = res.data.data.list
           that.total = res.data.data.total
-        }else {
+        } else if (res.data.code === 10001) {
           that.$message.error(res.data.msg)
         }
       })

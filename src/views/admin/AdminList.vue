@@ -21,7 +21,8 @@
           </el-select>
         </el-col>
         <el-col :span="5">
-          <el-input placeholder="请输入查询信息" v-model="queryInfo" @keyup.enter.native="getAdminList" clearable @clear="getAdminList" >
+          <el-input placeholder="请输入查询信息" v-model="queryInfo" @keyup.enter.native="getAdminList" clearable
+                    @clear="getAdminList">
             <el-button slot="append" icon="el-icon-search" @click="getAdminList"></el-button>
           </el-input>
         </el-col>
@@ -38,12 +39,12 @@
         </el-table-column>
         <el-table-column label="创建时间">
           <template slot-scope="scope">
-            {{scope.row.createTime | dateFormat}}
+            {{ scope.row.createTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="更新时间">
           <template slot-scope="scope">
-            {{scope.row.updateTime | dateFormat}}
+            {{ scope.row.updateTime | dateFormat }}
           </template>
         </el-table-column>
       </el-table>
@@ -122,14 +123,14 @@ export default {
           pageNum: this.pageNum,
           pageSize: this.pageSize
         },
-        headers:{
+        headers: {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.adminList = res.data.data.list
           that.total = res.data.data.total
-        }else {
+        } else if (res.data.code === 10001) {
           that.$message.error(res.data.msg)
         }
       })
@@ -140,7 +141,7 @@ export default {
       this.getAdminList()
     },
     //监听页码值改变事件
-    handleCurrentChange(newPage){
+    handleCurrentChange(newPage) {
       this.pageNum = newPage
       this.getAdminList()
     },

@@ -11,7 +11,8 @@
       <!-- 搜索与添加 -->
       <el-row :gutter="20">
         <el-col :span="4">
-          <el-select v-model="queryType" placeholder="请选择banner类型" clearable @clear="getBannerList" @change="getBannerList">
+          <el-select v-model="queryType" placeholder="请选择banner类型" clearable @clear="getBannerList"
+                     @change="getBannerList">
             <el-option
                 v-for="item in typeOptions"
                 :key="item.value"
@@ -35,27 +36,29 @@
         <el-table-column label="banner顺序" prop="bannerSeq"></el-table-column>
         <el-table-column label="banner类型">
           <template slot-scope="scope">
-            <el-tag>{{scope.row.bannerType | bannerType}}</el-tag>
+            <el-tag>{{ scope.row.bannerType | bannerType }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="商品编号" prop="productId"></el-table-column>
         <el-table-column label="商品类型编号" prop="categoryId"></el-table-column>
         <el-table-column label="创建时间">
           <template slot-scope="scope">
-            {{scope.row.createTime | dateFormat}}
+            {{ scope.row.createTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="更新时间">
           <template slot-scope="scope">
-            {{scope.row.updateTime | dateFormat}}
+            {{ scope.row.updateTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="操作" width="143px" fixed="right">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
-            <el-button type="primary" icon="el-icon-edit" size="medium" @click="showModifyDialog(scope.row.bannerId)"></el-button>
+            <el-button type="primary" icon="el-icon-edit" size="medium"
+                       @click="showModifyDialog(scope.row.bannerId)"></el-button>
             <!-- 删除按钮 -->
-            <el-button type="danger" icon="el-icon-delete" size="medium" @click="deleteBannerById(scope.row.bannerId)"></el-button>
+            <el-button type="danger" icon="el-icon-delete" size="medium"
+                       @click="deleteBannerById(scope.row.bannerId)"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -277,31 +280,31 @@ export default {
       //修改表单验证规则
       modifyFormRules: {
         bannerSeq: [
-          { required: true, message: '请选择banner顺序！'}
+          {required: true, message: '请选择banner顺序！'}
         ],
         bannerType: [
-          { required: true, message: '请选择banner类型！'}
+          {required: true, message: '请选择banner类型！'}
         ],
         productId: [
-          { validator: this.checkRules.checkIdNull, trigger: 'blur' }
+          {validator: this.checkRules.checkIdNull, trigger: 'blur'}
         ],
         categoryId: [
-          { validator: this.checkRules.checkIdNull, trigger: 'blur' }
+          {validator: this.checkRules.checkIdNull, trigger: 'blur'}
         ]
       },
       //添加表单验证规则
       addFormRules: {
         bannerSeq: [
-          { required: true, message: '请选择banner顺序！'}
+          {required: true, message: '请选择banner顺序！'}
         ],
         bannerType: [
-          { required: true, message: '请选择banner类型！'}
+          {required: true, message: '请选择banner类型！'}
         ],
         productId: [
-          { validator: this.checkRules.checkIdNull, trigger: 'blur' }
+          {validator: this.checkRules.checkIdNull, trigger: 'blur'}
         ],
         categoryId: [
-          { validator: this.checkRules.checkIdNull, trigger: 'blur' }
+          {validator: this.checkRules.checkIdNull, trigger: 'blur'}
         ]
       }
     }
@@ -322,10 +325,10 @@ export default {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.bannerList = res.data.data.list
           that.total = res.data.data.total
-        }else {
+        } else if (res.data.code === 10001) {
           that.$message.error(res.data.msg)
         }
       })
@@ -356,9 +359,9 @@ export default {
       this.modifyDialogVisible = false
       this.$refs.addFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //添加取消按钮
     cancelAdd() {
@@ -366,9 +369,9 @@ export default {
       this.addDialogVisible = false
       this.$refs.addFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //删除banner
     deleteBannerById(id) {
@@ -389,10 +392,10 @@ export default {
             token: that.$cookie.get('adminToken')
           }
         }).then(res => {
-          if (res.data.code === 10000){
+          if (res.data.code === 10000) {
             that.$message.success(res.data.msg)
             that.getBannerList()
-          }else if (res.data.code === 10001){
+          } else if (res.data.code === 10001) {
             that.$message.error(res.data.msg)
           }
         })
@@ -413,14 +416,14 @@ export default {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.modifyForm.bannerImg = res.data.data.bannerImg
           that.modifyForm.bannerSeq = res.data.data.bannerSeq
           that.modifyForm.bannerType = res.data.data.bannerType
           that.modifyForm.productId = res.data.data.productId
           that.modifyForm.categoryId = res.data.data.categoryId
           that.totalBannerImg = that.bannerImg + that.modifyForm.bannerImg
-        }else {
+        } else if (res.data.code === 10001) {
           that.$message.error(res.data.msg)
         }
       })
@@ -430,18 +433,18 @@ export default {
       const that = this
       this.$refs.modifyFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //监听添加对话框关闭事件
     addDialogClosed() {
       const that = this
       this.$refs.addFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //选择文件后
     onChangeFile(file) {
@@ -467,7 +470,7 @@ export default {
     modifyBanner() {
       const that = this
       this.$refs.modifyFormRef.validate(valid => {
-        if (valid){
+        if (valid) {
           const formData = new FormData
           //banner对象
           that.bannerObject.bannerId = that.modifyForm.bannerId
@@ -487,12 +490,12 @@ export default {
             method: 'put',
             url: '/banner/modify',
             data: formData,
-            headers:{
+            headers: {
               'ContentType': 'multipart/form-data',
               token: this.$cookie.get("adminToken")
             }
           }).then(res => {
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               //关闭对话框，重置回显
               that.modifyDialogVisible = false
               //刷新数据列表
@@ -501,10 +504,10 @@ export default {
               that.$message.success(res.data.msg)
               //成功重置表单
               that.file = null
-              setTimeout(function (){
+              setTimeout(function () {
                 that.base64Img = null
-              },200)
-            }else if (res.data.code === 10001){
+              }, 200)
+            } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
           })
@@ -515,7 +518,7 @@ export default {
     addBanner() {
       const that = this
       this.$refs.addFormRef.validate(valid => {
-        if (valid){
+        if (valid) {
           const formData = new FormData
           //banner对象
           that.bannerObject.bannerId = null
@@ -535,12 +538,12 @@ export default {
             method: 'post',
             url: '/banner/add',
             data: formData,
-            headers:{
+            headers: {
               'ContentType': 'multipart/form-data',
               token: this.$cookie.get("adminToken")
             }
           }).then(res => {
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               //关闭对话框，重置回显
               that.addDialogVisible = false
               //刷新数据列表
@@ -549,10 +552,10 @@ export default {
               that.$message.success(res.data.msg)
               //成功重置表单
               that.file = null
-              setTimeout(function (){
+              setTimeout(function () {
                 that.base64Img = null
-              },200)
-            }else if (res.data.code === 10001){
+              }, 200)
+            } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
           })
@@ -571,9 +574,9 @@ export default {
   },
   filters: {
     bannerType(data) {
-      if (data === 1){
+      if (data === 1) {
         return '商品'
-      }else if (data === 2){
+      } else if (data === 2) {
         return '商品类型'
       }
     }

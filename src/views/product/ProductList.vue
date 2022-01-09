@@ -11,7 +11,8 @@
       <!-- 搜索与添加 -->
       <el-row :gutter="20">
         <el-col :span="4" class="option-query">
-          <el-select v-model="queryType" placeholder="请选择查询类型" clearable @clear="getProductList" @change="getProductList">
+          <el-select v-model="queryType" placeholder="请选择查询类型" clearable @clear="getProductList"
+                     @change="getProductList">
             <el-option
                 v-for="item in typeOptions"
                 :key="item.value"
@@ -21,7 +22,8 @@
           </el-select>
         </el-col>
         <el-col :span="5">
-          <el-input placeholder="请输入查询信息" v-model="queryInfo" @keyup.enter.native="getProductList" clearable @clear="getProductList" >
+          <el-input placeholder="请输入查询信息" v-model="queryInfo" @keyup.enter.native="getProductList" clearable
+                    @clear="getProductList">
             <el-button slot="append" icon="el-icon-search" @click="getProductList"></el-button>
           </el-input>
         </el-col>
@@ -45,20 +47,22 @@
         <el-table-column label="商品销量" prop="productSales"></el-table-column>
         <el-table-column label="创建时间">
           <template slot-scope="scope">
-            {{scope.row.createTime | dateFormat}}
+            {{ scope.row.createTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="更新时间">
           <template slot-scope="scope">
-            {{scope.row.updateTime | dateFormat}}
+            {{ scope.row.updateTime | dateFormat }}
           </template>
         </el-table-column>
         <el-table-column label="操作" width="143px" fixed="right">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
-            <el-button type="primary" icon="el-icon-edit" size="medium" @click="showModifyDialog(scope.row.productId)"></el-button>
+            <el-button type="primary" icon="el-icon-edit" size="medium"
+                       @click="showModifyDialog(scope.row.productId)"></el-button>
             <!-- 删除按钮 -->
-            <el-button type="danger" icon="el-icon-delete" size="medium" @click="deleteProductById(scope.row.productId)"></el-button>
+            <el-button type="danger" icon="el-icon-delete" size="medium"
+                       @click="deleteProductById(scope.row.productId)"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -124,7 +128,8 @@
         @close="modifyDialogClosed"
         :close-on-click-modal="false">
       <!-- 信息修改 -->
-      <el-form :model="modifyForm" :rules="modifyFormRules" ref="modifyFormRef" label-width="120px" class="el-form-block">
+      <el-form :model="modifyForm" :rules="modifyFormRules" ref="modifyFormRef" label-width="120px"
+               class="el-form-block">
         <!-- 商品图片 -->
         <el-form-item label="商品图片" class="el-form-block-img">
           <img :src="base64Img?base64Img:totalProductImg" class="avatar" @click="showImg($event)">
@@ -261,47 +266,47 @@ export default {
       //修改规则
       modifyFormRules: {
         productName: [
-          { required: true, message: '请输入商品名！', trigger: 'blur' },
+          {required: true, message: '请输入商品名！', trigger: 'blur'},
         ],
         productPrice: [
-          { required: true, message: '请输入商品价格！', trigger: 'blur' },
-          { validator: this.checkRules.checkMoney, trigger: 'blur' }
+          {required: true, message: '请输入商品价格！', trigger: 'blur'},
+          {validator: this.checkRules.checkMoney, trigger: 'blur'}
         ],
         categoryId: [
-          { required: true, message: '请输入商品类型编号！', trigger: 'blur' },
-          { validator: this.checkRules.checkId, trigger: 'blur' }
+          {required: true, message: '请输入商品类型编号！', trigger: 'blur'},
+          {validator: this.checkRules.checkId, trigger: 'blur'}
         ],
         productBrand: [
-          { required: true, message: '请输入商品品牌！', trigger: 'blur' },
+          {required: true, message: '请输入商品品牌！', trigger: 'blur'},
         ],
         productStock: [
-          { required: true, message: '请输入商品库存！', trigger: 'blur' },
-          { validator: this.checkRules.checkInt, trigger: 'blur' }
+          {required: true, message: '请输入商品库存！', trigger: 'blur'},
+          {validator: this.checkRules.checkInt, trigger: 'blur'}
         ],
         productSales: [
-          { required: true, message: '请输入商品销量！', trigger: 'blur' },
-          { validator: this.checkRules.checkInt, trigger: 'blur' }
+          {required: true, message: '请输入商品销量！', trigger: 'blur'},
+          {validator: this.checkRules.checkInt, trigger: 'blur'}
         ]
       },
       //添加规则
       addFormRules: {
         productName: [
-          { required: true, message: '请输入商品名！', trigger: 'blur' },
+          {required: true, message: '请输入商品名！', trigger: 'blur'},
         ],
         productPrice: [
-          { required: true, message: '请输入商品价格！', trigger: 'blur' },
-          { validator: this.checkRules.checkMoney, trigger: 'blur' }
+          {required: true, message: '请输入商品价格！', trigger: 'blur'},
+          {validator: this.checkRules.checkMoney, trigger: 'blur'}
         ],
         categoryId: [
-          { required: true, message: '请输入商品类型编号！', trigger: 'blur' },
-          { validator: this.checkRules.checkId, trigger: 'blur' }
+          {required: true, message: '请输入商品类型编号！', trigger: 'blur'},
+          {validator: this.checkRules.checkId, trigger: 'blur'}
         ],
         productBrand: [
-          { required: true, message: '请输入商品品牌！', trigger: 'blur' },
+          {required: true, message: '请输入商品品牌！', trigger: 'blur'},
         ],
         productStock: [
-          { required: true, message: '请输入商品库存！', trigger: 'blur' },
-          { validator: this.checkRules.checkInt, trigger: 'blur' }
+          {required: true, message: '请输入商品库存！', trigger: 'blur'},
+          {validator: this.checkRules.checkInt, trigger: 'blur'}
         ],
       }
     }
@@ -323,10 +328,10 @@ export default {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.productList = res.data.data.list
           that.total = res.data.data.total
-        }else {
+        } else if (res.data.code === 10001) {
           that.$message.error(res.data.msg)
         }
       })
@@ -344,7 +349,7 @@ export default {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.modifyForm.productImg = res.data.data.productImg
           that.modifyForm.productName = res.data.data.productName
           that.modifyForm.productPrice = res.data.data.productPrice
@@ -353,7 +358,7 @@ export default {
           that.modifyForm.productStock = res.data.data.productStock
           that.modifyForm.productSales = res.data.data.productSales
           that.totalProductImg = that.productImg + that.modifyForm.productImg
-        }else {
+        } else if (res.data.code === 10001) {
           that.$message.error(res.data.msg)
         }
       })
@@ -396,10 +401,10 @@ export default {
             token: that.$cookie.get('adminToken')
           }
         }).then(res => {
-          if (res.data.code === 10000){
+          if (res.data.code === 10000) {
             that.$message.success(res.data.msg)
             that.getProductList()
-          }else if (res.data.code === 10001){
+          } else if (res.data.code === 10001) {
             that.$message.error(res.data.msg)
           }
         })
@@ -422,18 +427,18 @@ export default {
       const that = this
       this.$refs.modifyFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //监听添加对话框关闭事件
     addDialogClosed() {
       const that = this
       this.$refs.addFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //取消添加
     cancelAdd() {
@@ -441,18 +446,18 @@ export default {
       this.addDialogVisible = false
       this.$refs.addFormRef.resetFields()
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //取消修改
     cancelModify() {
       const that = this
       this.modifyDialogVisible = false
       this.file = null
-      setTimeout(function (){
+      setTimeout(function () {
         that.base64Img = null
-      },200)
+      }, 200)
     },
     //选择文件后
     onChangeFile(file) {
@@ -478,7 +483,7 @@ export default {
     addProduct() {
       const that = this
       this.$refs.addFormRef.validate(valid => {
-        if (valid){
+        if (valid) {
           const formData = new FormData
           //商品图片对象
           that.productObject.productId = null
@@ -500,12 +505,12 @@ export default {
             method: 'post',
             url: '/product/add',
             data: formData,
-            headers:{
+            headers: {
               'ContentType': 'multipart/form-data',
               token: this.$cookie.get("adminToken")
             }
           }).then(res => {
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               //关闭对话框重置回显
               that.addDialogVisible = false
               //刷新数据列表
@@ -514,10 +519,10 @@ export default {
               that.$message.success(res.data.msg)
               //成功重置表单
               that.file = null
-              setTimeout(function (){
+              setTimeout(function () {
                 that.base64Img = null
-              },200)
-            }else if (res.data.code === 10001){
+              }, 200)
+            } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
           })
@@ -528,7 +533,7 @@ export default {
     modifyProduct() {
       const that = this
       this.$refs.modifyFormRef.validate(valid => {
-        if (valid){
+        if (valid) {
           const formData = new FormData
           //商品对象
           that.productObject.productId = that.modifyForm.productId
@@ -550,12 +555,12 @@ export default {
             method: 'put',
             url: '/product/modify',
             data: formData,
-            headers:{
+            headers: {
               'ContentType': 'multipart/form-data',
               token: this.$cookie.get("adminToken")
             }
           }).then(res => {
-            if (res.data.code === 10000){
+            if (res.data.code === 10000) {
               //关闭对话框重置回显
               that.modifyDialogVisible = false
               //刷新数据列表
@@ -564,10 +569,10 @@ export default {
               that.$message.success(res.data.msg)
               //成功重置表单
               that.file = null
-              setTimeout(function (){
+              setTimeout(function () {
                 that.base64Img = null
-              },200)
-            }else if (res.data.code === 10001){
+              }, 200)
+            } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
           })

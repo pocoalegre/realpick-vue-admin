@@ -33,9 +33,9 @@ export default {
   data() {
     //确认新密码规则
     let confirmNewPwd = (rule, value, callback) => {
-      if (value !== this.modifyPwdForm.newPwd){
+      if (value !== this.modifyPwdForm.newPwd) {
         callback(new Error('两次输入密码不一致!'));
-      }else {
+      } else {
         callback();
       }
     }
@@ -49,23 +49,23 @@ export default {
       //表单验证规则对象
       modifyPwdFormRules: {
         //验证密码是否合法
-        id:[
-          { required: true, message: '请输入用户编号！', trigger: 'blur' },
-          { validator: this.checkRules.checkId, trigger: 'blur' }
+        id: [
+          {required: true, message: '请输入用户编号！', trigger: 'blur'},
+          {validator: this.checkRules.checkId, trigger: 'blur'}
         ],
-        newPwd:[
-          { required: true, message: '请输入新密码！', trigger: 'blur' },
-          { validator: this.checkRules.checkPwd, trigger: 'blur' }
+        newPwd: [
+          {required: true, message: '请输入新密码！', trigger: 'blur'},
+          {validator: this.checkRules.checkPwd, trigger: 'blur'}
         ],
-        reNewPwd:[
-          { required: true, message: '请确认新密码！', trigger: 'blur' },
-          { validator: confirmNewPwd, trigger: 'blur' }
+        reNewPwd: [
+          {required: true, message: '请确认新密码！', trigger: 'blur'},
+          {validator: confirmNewPwd, trigger: 'blur'}
         ],
       }
     }
   },
   methods: {
-    resetLoginForm(){
+    resetLoginForm() {
       this.$refs.modifyPwdFormRef.resetFields();
     },
     modifyUserPwd() {
@@ -81,10 +81,10 @@ export default {
           token: this.$cookie.get("adminToken")
         }
       }).then(res => {
-        if (res.data.code === 10000){
+        if (res.data.code === 10000) {
           that.$message.success(res.data.msg)
           that.resetLoginForm()
-        }else {
+        } else if (res.data.code === 10001) {
           that.$message.error(res.data.msg)
           that.resetLoginForm()
         }

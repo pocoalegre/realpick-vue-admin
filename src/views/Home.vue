@@ -8,7 +8,7 @@
       </div>
       <div class="admin-info">
         <el-avatar shape="circle" :size="35" :src="adminImg"></el-avatar>
-        <span class="admin-nickname">{{adminNickname}}</span>
+        <span class="admin-nickname">{{ adminNickname }}</span>
         <el-button size="small" type="info" @click="this.logout">退出</el-button>
       </div>
     </el-header>
@@ -34,7 +34,7 @@
               <!-- 图标 -->
               <i :class="parent.icon"></i>
               <!-- 文本 -->
-              <span>{{parent.name}}</span>
+              <span>{{ parent.name }}</span>
             </template>
             <!-- 二级菜单 -->
             <el-menu-item :index="self.path" v-for="self in selfList"
@@ -44,7 +44,7 @@
                 <!-- 图标 -->
                 <i :class="self.icon"></i>
                 <!-- 文本 -->
-                <span>{{self.self}}</span>
+                <span>{{ self.self }}</span>
               </template>
             </el-menu-item>
           </el-submenu>
@@ -69,8 +69,8 @@ export default {
     })
     this.activePath = this.$cookie.get('adminActivePath')
   },
-  data(){
-    return{
+  data() {
+    return {
       adminNickname: this.$cookie.get('adminNickname'),
       adminImg: this.adminHeadImg + this.$cookie.get('adminImg'),
       //菜单折叠
@@ -117,13 +117,13 @@ export default {
       activePath: '',
     }
   },
-  methods:{
+  methods: {
     //切换菜单折叠与展开效果
-    toggleCollapse(){
-      this.isCollapse = ! this.isCollapse
+    toggleCollapse() {
+      this.isCollapse = !this.isCollapse
     },
     //保存选中状态
-    saveStatus(activePath){
+    saveStatus(activePath) {
       this.$cookie.set('adminActivePath', activePath)
     }
   }
@@ -144,13 +144,16 @@ export default {
   color: #fff;
   font-size: 20px;
   position: relative;
-  > div{
+
+  > div {
     display: flex;
     align-items: center;
+
     span {
       margin-left: 10px;
     }
   }
+
   img {
     height: 40px;
     width: 40px;
@@ -159,6 +162,7 @@ export default {
 
 .el-aside {
   background-color: #444444;
+
   .el-menu {
     border-right: none;
   }
@@ -183,6 +187,7 @@ export default {
   justify-content: space-around;
   position: absolute;
   right: 10px;
+
   .admin-nickname {
     font-size: 15px;
     margin-right: 10px;
