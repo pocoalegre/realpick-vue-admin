@@ -29,11 +29,11 @@
       </el-row>
       <el-table :data="orderList" border stripe>
         <el-table-column label="编号" prop="orderId" width="80px" fixed="left"></el-table-column>
-        <el-table-column label="订单号" prop="orderNumber"></el-table-column>
+        <el-table-column label="订单号" prop="orderNumber" width="172px"></el-table-column>
         <el-table-column label="用户编号" prop="userId"></el-table-column>
-        <el-table-column label="收件人姓名" prop="receiverName" width="90px"></el-table-column>
+        <el-table-column label="收件人姓名" prop="receiverName" width="84px"></el-table-column>
         <el-table-column label="收件人电话" prop="receiverTel" width="100px"></el-table-column>
-        <el-table-column label="收件人地址" prop="receiverAddr" width="90px"></el-table-column>
+        <el-table-column label="收件人地址" prop="receiverAddr" width="220px"></el-table-column>
         <el-table-column label="支付方式">
           <template slot-scope="scope">
             {{ scope.row.payType | payType }}

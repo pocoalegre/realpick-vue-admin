@@ -34,7 +34,7 @@
       <!-- 商品列表 -->
       <el-table :data="productList" border stripe>
         <el-table-column label="编号" prop="productId" width="80px" fixed="left"></el-table-column>
-        <el-table-column label="商品图片" prop="colorImg">
+        <el-table-column label="商品图片">
           <template slot-scope="scope">
             <img :src="productImg + scope.row.productImg" @click="showImg($event)">
           </template>

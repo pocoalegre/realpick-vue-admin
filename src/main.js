@@ -55,7 +55,6 @@ Vue.prototype.userHeadImg = Vue.prototype.baseUrl + '/uploadImg/userHead/'
 Vue.prototype.bannerImg = Vue.prototype.baseUrl + '/uploadImg/banner/'
 Vue.prototype.categoryImg = Vue.prototype.baseUrl + '/uploadImg/category/'
 Vue.prototype.productImg = Vue.prototype.baseUrl + '/uploadImg/product/img/'
-Vue.prototype.productSkuImg = Vue.prototype.baseUrl + '/uploadImg/product/sku/'
 Vue.prototype.orderDetailImg = Vue.prototype.baseUrl + '/uploadImg/orderDetail/'
 Vue.prototype.$cookie = Cookies;
 Vue.prototype.logout = logout

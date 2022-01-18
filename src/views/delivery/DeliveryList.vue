@@ -440,7 +440,7 @@ export default {
     },
     //查询物流
     queryDeliveryUrl(nu, com) {
-      window.location.href = 'https://www.kuaidi100.com/chaxun?com=' + com + '&nu=' + nu;
+      window.open('https://www.kuaidi100.com/chaxun?com=' + com + '&nu=' + nu);
     }
   }
 }

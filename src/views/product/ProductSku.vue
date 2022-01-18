@@ -26,11 +26,6 @@
         <el-table-column label="商品编号" prop="productId"></el-table-column>
         <el-table-column label="商品尺寸" prop="skuSize"></el-table-column>
         <el-table-column label="商品颜色" prop="skuColor"></el-table-column>
-        <el-table-column label="颜色图片" prop="colorImg">
-          <template slot-scope="scope">
-            <img :src="productSkuImg + scope.row.colorImg" @click="showImg($event)">
-          </template>
-        </el-table-column>
         <el-table-column label="创建时间">
           <template slot-scope="scope">
             {{ scope.row.createTime | dateFormat }}
@@ -82,18 +77,6 @@
         <el-form-item label="商品颜色" prop="skuColor">
           <el-input v-model="addForm.skuColor"></el-input>
         </el-form-item>
-        <!-- sku图片 -->
-        <el-form-item label="颜色图片" class="el-form-block-img">
-          <img :src="base64Img?base64Img:defaultProductSkuImg" class="avatar" @click="showImg($event)">
-          <el-upload
-              action=""
-              :auto-upload="false"
-              :show-file-list="false"
-              accept=".jpg,.JPG,.jpeg,.JPEG,.png,.PNG"
-              :on-change="onChangeFile">
-            <el-button class="choose-file-btn" size="small" slot="trigger">选择文件</el-button>
-          </el-upload>
-        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="addProductSku">确 定</el-button>
@@ -120,31 +103,11 @@
         <el-form-item label="商品颜色" prop="skuColor">
           <el-input v-model="modifyForm.skuColor"></el-input>
         </el-form-item>
-        <!-- sku图片 -->
-        <el-form-item label="颜色图片" class="el-form-block-img">
-          <img :src="base64Img?base64Img:totalProductSkuImg" class="avatar" @click="showImg($event)">
-          <el-upload
-              action=""
-              :auto-upload="false"
-              :show-file-list="false"
-              accept=".jpg,.JPG,.jpeg,.JPEG,.png,.PNG"
-              :on-change="onChangeFile">
-            <el-button class="choose-file-btn" size="small" slot="trigger">选择文件</el-button>
-          </el-upload>
-        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="modifyProductSku">确 定</el-button>
         <el-button @click="cancelModify">取 消</el-button>
       </span>
-    </el-dialog>
-    <!-- 图片预览 -->
-    <el-dialog
-        :visible.sync="imgDialogVisible"
-        @close="imgDialogClosed"
-        width="30%"
-        :close-on-click-modal="false">
-      <img width="100%" :src="showImgUrl" alt="">
     </el-dialog>
   </div>
 </template>
@@ -167,18 +130,6 @@ export default {
       total: 0,
       //查询商品id
       queryProductId: '',
-      //预览图片
-      showImgUrl: '',
-      //商品图片完整链接
-      totalProductSkuImg: '',
-      //默认占位图
-      defaultProductSkuImg: this.productSkuImg + 'placeholder.jpg',
-      //上传的文件
-      file: {},
-      //回显base64编码图片
-      base64Img: '',
-      //图片预览对话框显示与隐藏,
-      imgDialogVisible: false,
       //修改对话框显示与隐藏
       modifyDialogVisible: false,
       //添加对话框显示与隐藏
@@ -188,26 +139,13 @@ export default {
         skuId: '',
         productId: '',
         skuSize: '',
-        skuColor: '',
-        colorImg: ''
+        skuColor: ''
       },
       //添加表单
       addForm: {
         productId: '',
         skuSize: '',
-        skuColor: '',
-        colorImg: ''
-      },
-      //商品sku对象
-      productSkuObject: {
-        skuId: '',
-        productId: '',
-        skuSize: '',
-        skuColor: '',
-        colorImg: '',
-        deleted: '',
-        createTime: '',
-        updateTime: ''
+        skuColor: ''
       },
       //修改规则
       modifyFormRules: {
@@ -278,8 +216,6 @@ export default {
           that.modifyForm.productId = res.data.data.productId
           that.modifyForm.skuSize = res.data.data.skuSize
           that.modifyForm.skuColor = res.data.data.skuColor
-          that.modifyForm.colorImg = res.data.data.colorImg
-          that.totalProductSkuImg = that.productSkuImg + that.modifyForm.colorImg
         } else {
           that.$message.error(res.data.msg)
         }
@@ -294,15 +230,6 @@ export default {
     handleCurrentChange(newPage) {
       this.pageNum = newPage
       this.getProductSkuList()
-    },
-    //图片预览
-    showImg(e) {
-      this.imgDialogVisible = true
-      this.showImgUrl = e.target.src
-    },
-    //监听图片预览对话框关闭
-    imgDialogClosed() {
-      this.showImgUrl = ''
     },
     //删除商品sku
     deleteProductSkuById(id) {
@@ -346,86 +273,35 @@ export default {
     },
     //监听修改对话框关闭事件
     modifyDialogClosed() {
-      const that = this
       this.$refs.modifyFormRef.resetFields()
-      this.file = null
-      setTimeout(function () {
-        that.base64Img = null
-      }, 200)
     },
     //监听添加对话框关闭事件
     addDialogClosed() {
-      const that = this
       this.$refs.addFormRef.resetFields()
-      this.file = null
-      setTimeout(function () {
-        that.base64Img = null
-      }, 200)
     },
     //取消添加
     cancelAdd() {
-      const that = this
       this.addDialogVisible = false
       this.$refs.addFormRef.resetFields()
-      this.file = null
-      setTimeout(function () {
-        that.base64Img = null
-      }, 200)
     },
     //取消修改
     cancelModify() {
-      const that = this
       this.modifyDialogVisible = false
-      this.file = null
-      setTimeout(function () {
-        that.base64Img = null
-      }, 200)
-    },
-    //选择文件后
-    onChangeFile(file) {
-      const isLt5M = file.size / 1024 / 1024 < 5;
-      if (!isLt5M) {
-        this.$message.error('上传图片大小不能超过 5MB!');
-        return isLt5M;
-      }
-      this.base64Encoding(file.raw)
-      //文件
-      this.file = file.raw
-    },
-    //得到base64图片
-    base64Encoding(file) {
-      const that = this
-      let reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = function () {
-        that.base64Img = reader.result
-      }
     },
     //添加商品sku
     addProductSku() {
       const that = this
       this.$refs.addFormRef.validate(valid => {
         if (valid) {
-          const formData = new FormData
-          //商品sku对象
-          that.productSkuObject.skuId = null
-          that.productSkuObject.productId = that.addForm.productId
-          that.productSkuObject.skuSize = that.addForm.skuSize
-          that.productSkuObject.skuColor = that.addForm.skuColor
-          that.productSkuObject.colorImg = null
-          that.productSkuObject.deleted = null
-          that.productSkuObject.createTime = null
-          that.productSkuObject.updateTime = null
-          //转化字符串
-          let productSku = JSON.stringify(that.productSkuObject)
-          formData.append('file', that.file)
-          formData.append('productSku', productSku)
           axios({
             method: 'post',
             url: '/productSku/add',
-            data: formData,
+            data: {
+              productId: that.addForm.productId,
+              skuSize: that.addForm.skuSize,
+              skuColor: that.addForm.skuColor
+            },
             headers: {
-              'ContentType': 'multipart/form-data',
               token: this.$cookie.get("adminToken")
             }
           }).then(res => {
@@ -436,11 +312,6 @@ export default {
               that.getProductSkuList()
               //提示修改成功
               that.$message.success(res.data.msg)
-              //成功重置表单
-              that.file = null
-              setTimeout(function () {
-                that.base64Img = null
-              }, 200)
             } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
@@ -453,26 +324,16 @@ export default {
       const that = this
       this.$refs.modifyFormRef.validate(valid => {
         if (valid) {
-          const formData = new FormData
-          //商品图片对象
-          that.productSkuObject.skuId = that.modifyForm.skuId
-          that.productSkuObject.productId = that.modifyForm.productId
-          that.productSkuObject.skuSize = that.modifyForm.skuSize
-          that.productSkuObject.skuColor = that.modifyForm.skuColor
-          that.productSkuObject.colorImg = null
-          that.productSkuObject.deleted = null
-          that.productSkuObject.createTime = null
-          that.productSkuObject.updateTime = null
-          //转化字符串
-          let productSku = JSON.stringify(that.productSkuObject)
-          formData.append('file', that.file)
-          formData.append('productSku', productSku)
           axios({
             method: 'put',
             url: '/productSku/modify',
-            data: formData,
+            data: {
+              skuId: that.modifyForm.skuId,
+              productId: that.modifyForm.productId,
+              skuSize: that.modifyForm.skuSize,
+              skuColor: that.modifyForm.skuColor
+            },
             headers: {
-              'ContentType': 'multipart/form-data',
               token: this.$cookie.get("adminToken")
             }
           }).then(res => {
@@ -483,11 +344,6 @@ export default {
               that.getProductSkuList()
               //提示修改成功
               that.$message.success(res.data.msg)
-              //成功重置表单
-              that.file = null
-              setTimeout(function () {
-                that.base64Img = null
-              }, 200)
             } else if (res.data.code === 10001) {
               that.$message.error(res.data.msg)
             }
@@ -500,19 +356,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.el-table {
-  img {
-    height: 50px;
-    width: 50px;
-  }
-}
-
-.avatar {
-  margin-top: -40px;
-  height: 120px;
-  display: block;
-}
-
 .choose-file-btn {
   margin-top: 10px;
   margin-right: 10px;
@@ -520,9 +363,5 @@ export default {
 
 .el-form-block {
   margin-top: 20px;
-}
-
-.el-form-block-img {
-  margin-top: 65px;
 }
 </style>
