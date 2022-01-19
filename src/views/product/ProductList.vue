@@ -39,7 +39,7 @@
             <img :src="productImg + scope.row.productImg" @click="showImg($event)">
           </template>
         </el-table-column>
-        <el-table-column label="商品名" prop="productName"></el-table-column>
+        <el-table-column label="商品名" prop="productName" width="250px"></el-table-column>
         <el-table-column label="商品价格" prop="productPrice"></el-table-column>
         <el-table-column label="商品类型编号" prop="categoryId"></el-table-column>
         <el-table-column label="商品品牌" prop="productBrand"></el-table-column>

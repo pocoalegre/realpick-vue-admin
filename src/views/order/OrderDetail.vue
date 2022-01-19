@@ -22,20 +22,15 @@
         <el-table-column label="编号" prop="detailId" width="80px" fixed="left"></el-table-column>
         <el-table-column label="订单编号" prop="orderId"></el-table-column>
         <el-table-column label="商品编号" prop="productId"></el-table-column>
-        <el-table-column label="商品名" prop="productName"></el-table-column>
+        <el-table-column label="商品名" prop="productName" width="250px"></el-table-column>
         <el-table-column label="商品图片">
           <template slot-scope="scope">
-            <img :src="orderDetailImg + scope.row.productImg" @click="showImg($event)">
+            <img :src="productImg + scope.row.productImg" @click="showImg($event)">
           </template>
         </el-table-column>
         <el-table-column label="sku编号" prop="skuId"></el-table-column>
         <el-table-column label="商品尺寸" prop="skuSize"></el-table-column>
         <el-table-column label="商品颜色" prop="skuColor"></el-table-column>
-        <el-table-column label="颜色图片" prop="colorImg">
-          <template slot-scope="scope">
-            <img :src="orderDetailImg + scope.row.colorImg" @click="showImg($event)">
-          </template>
-        </el-table-column>
         <el-table-column label="购买数量" prop="buyNumber"></el-table-column>
         <el-table-column label="售价" prop="sellPrice"></el-table-column>
         <el-table-column label="单品总价" prop="totalAmount"></el-table-column>
