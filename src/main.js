@@ -18,7 +18,7 @@ import './assets/css/global.css'
 //配置请求根路径
 axios.defaults.baseURL = 'http://localhost:8080'
 
-// 定义全局时间戳过滤器
+//定义全局时间戳过滤器
 Vue.filter('dateFormat', function (value) {
     if (value !== null) {
         return Moment(value).format('YYYY-MM-DD HH:mm:ss')
@@ -46,6 +46,12 @@ Vue.filter('deliveryFormat', function (value) {
         return '中通快递'
     } else if (value === 'shentong') {
         return '申通快递'
+    }
+})
+//全局金额过滤器
+Vue.filter('cnyFormat', function (value) {
+    if (value !== null){
+        return '￥' + value
     }
 })
 

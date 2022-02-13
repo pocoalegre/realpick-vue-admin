@@ -39,8 +39,16 @@
             {{ scope.row.payType | payType }}
           </template>
         </el-table-column>
-        <el-table-column label="总价" prop="totalAmount"></el-table-column>
-        <el-table-column label="实际支付" prop="actualAmount"></el-table-column>
+        <el-table-column label="总价">
+          <template slot-scope="scope">
+            {{ scope.row.totalAmount | cnyFormat }}
+          </template>
+        </el-table-column>
+        <el-table-column label="实际支付">
+          <template slot-scope="scope">
+            {{ scope.row.actualAmount | cnyFormat }}
+          </template>
+        </el-table-column>
         <el-table-column label="订单备注" prop="orderRemark" width="140px"></el-table-column>
         <el-table-column label="提交时间" width="140px">
           <template slot-scope="scope">

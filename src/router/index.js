@@ -19,7 +19,6 @@ import ProductSku from "@/views/product/ProductSku";
 import OrderList from "@/views/order/OrderList";
 import OrderDetail from "@/views/order/OrderDetail";
 import DeliveryList from "@/views/delivery/DeliveryList";
-import el from "element-ui/src/locale/lang/el";
 
 Vue.use(VueRouter)
 

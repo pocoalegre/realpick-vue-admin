@@ -40,7 +40,11 @@
           </template>
         </el-table-column>
         <el-table-column label="商品名" prop="productName" width="250px"></el-table-column>
-        <el-table-column label="商品价格" prop="productPrice"></el-table-column>
+        <el-table-column label="商品价格">
+          <template slot-scope="scope">
+            {{ scope.row.productPrice | cnyFormat }}
+          </template>
+        </el-table-column>
         <el-table-column label="商品类型编号" prop="categoryId"></el-table-column>
         <el-table-column label="商品品牌" prop="productBrand"></el-table-column>
         <el-table-column label="商品库存" prop="productStock"></el-table-column>
@@ -586,8 +590,8 @@ export default {
 <style lang="less" scoped>
 .el-table {
   img {
-    height: 50px;
-    width: 50px;
+    height: 30px;
+    width: 30px;
   }
 }
 

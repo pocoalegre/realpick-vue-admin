@@ -32,8 +32,16 @@
         <el-table-column label="商品尺寸" prop="skuSize"></el-table-column>
         <el-table-column label="商品颜色" prop="skuColor"></el-table-column>
         <el-table-column label="购买数量" prop="buyNumber"></el-table-column>
-        <el-table-column label="售价" prop="sellPrice"></el-table-column>
-        <el-table-column label="单品总价" prop="totalAmount"></el-table-column>
+        <el-table-column label="售价">
+          <template slot-scope="scope">
+            {{ scope.row.sellPrice | cnyFormat }}
+          </template>
+        </el-table-column>
+        <el-table-column label="单品总价">
+          <template slot-scope="scope">
+            {{ scope.row.totalAmount | cnyFormat }}
+          </template>
+        </el-table-column>
         <el-table-column label="创建时间" width="140px">
           <template slot-scope="scope">
             {{ scope.row.createTime | dateFormat }}
@@ -141,8 +149,8 @@ export default {
 <style lang="less" scoped>
 .el-table {
   img {
-    height: 50px;
-    width: 50px;
+    height: 30px;
+    width: 30px;
   }
 }
 </style>
