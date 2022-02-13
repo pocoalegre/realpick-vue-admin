@@ -8,7 +8,7 @@
     </el-breadcrumb>
     <!-- 卡片视图 -->
     <el-card>
-      <el-form :model="modifyPwdForm" :rules="modifyPwdFormRules" ref="modifyPwdFormRef" label-width="100px">
+      <el-form :model="modifyPwdForm" :rules="modifyPwdFormRules" ref="modifyPwdFormRef" label-width="100px" size="medium">
         <el-form-item label="用户编号" prop="id">
           <el-input v-model="modifyPwdForm.id"></el-input>
         </el-form-item>

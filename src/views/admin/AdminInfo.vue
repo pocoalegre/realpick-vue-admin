@@ -47,7 +47,7 @@
         @close="modifyDialogClosed"
         :close-on-click-modal="false">
       <!-- 信息修改 -->
-      <el-form :model="modifyForm" :rules="modifyFormRules" ref="modifyFormRef" label-width="100px">
+      <el-form :model="modifyForm" :rules="modifyFormRules" ref="modifyFormRef" label-width="100px" size="medium">
         <!-- 头像 -->
         <el-form-item label="管理员头像" class="head-img">
           <img :src="base64Img?base64Img:totalAdminImg" class="avatar" @click="showImg($event)">
@@ -70,8 +70,8 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="adminModify">确 定</el-button>
-        <el-button @click="cancelModify">取 消</el-button>
+        <el-button size="medium" type="primary" @click="adminModify">确 定</el-button>
+        <el-button size="medium" @click="cancelModify">取 消</el-button>
       </span>
     </el-dialog>
     <!-- 图片预览 -->

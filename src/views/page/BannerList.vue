@@ -81,7 +81,7 @@
         @close="addDialogClosed"
         :close-on-click-modal="false">
       <!-- 添加信息 -->
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px">
+      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px" size="medium">
         <!-- banner图片 -->
         <el-form-item label="banner图片" class="banner-img">
           <img :src="base64Img?base64Img:defaultBannerImg" class="avatar" @click="showImg($event)">
@@ -119,8 +119,8 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="addBanner">确 定</el-button>
-        <el-button @click="cancelAdd">取 消</el-button>
+        <el-button size="medium" type="primary" @click="addBanner">确 定</el-button>
+        <el-button size="medium" @click="cancelAdd">取 消</el-button>
       </span>
     </el-dialog>
     <!-- 修改banner对话框 -->
@@ -131,7 +131,7 @@
         @close="modifyDialogClosed"
         :close-on-click-modal="false">
       <!-- 修改信息 -->
-      <el-form :model="modifyForm" :rules="modifyFormRules" ref="modifyFormRef" label-width="100px">
+      <el-form :model="modifyForm" :rules="modifyFormRules" ref="modifyFormRef" label-width="100px" size="medium">
         <!-- banner图片 -->
         <el-form-item label="banner图片" class="banner-img">
           <img :src="base64Img?base64Img:totalBannerImg" class="avatar" @click="showImg($event)">
@@ -169,8 +169,8 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="modifyBanner">确 定</el-button>
-        <el-button @click="cancelModify">取 消</el-button>
+        <el-button size="medium" type="primary" @click="modifyBanner">确 定</el-button>
+        <el-button size="medium" @click="cancelModify">取 消</el-button>
       </span>
     </el-dialog>
     <!-- 图片预览 -->

@@ -66,7 +66,7 @@
         @close="addDialogClosed"
         :close-on-click-modal="false">
       <!-- 信息添加 -->
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px" class="el-form-block">
+      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px" class="el-form-block" size="medium">
         <!-- 商品参数信息 -->
         <el-form-item label="商品编号" prop="productId">
           <el-input v-model="addForm.productId"></el-input>
@@ -79,8 +79,8 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="addProductParam">确 定</el-button>
-        <el-button @click="cancelAdd">取 消</el-button>
+        <el-button size="medium" type="primary" @click="addProductParam">确 定</el-button>
+        <el-button size="medium" @click="cancelAdd">取 消</el-button>
       </span>
     </el-dialog>
     <!-- 修改商品参数对话框 -->
@@ -92,7 +92,7 @@
         :close-on-click-modal="false">
       <!-- 信息修改 -->
       <el-form :model="modifyForm" :rules="modifyFormRules" ref="modifyFormRef" label-width="100px"
-               class="el-form-block">
+               class="el-form-block" size="medium">
         <!-- 商品参数信息 -->
         <el-form-item label="商品编号" prop="productId">
           <el-input v-model="modifyForm.productId"></el-input>
@@ -105,8 +105,8 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="modifyProductParam">确 定</el-button>
-        <el-button @click="cancelModify">取 消</el-button>
+        <el-button size="medium" type="primary" @click="modifyProductParam">确 定</el-button>
+        <el-button size="medium" @click="cancelModify">取 消</el-button>
       </span>
     </el-dialog>
   </div>
