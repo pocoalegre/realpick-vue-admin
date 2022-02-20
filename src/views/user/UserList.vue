@@ -35,18 +35,18 @@
         <el-table-column label="编号" prop="userId" width="80px" fixed="left"></el-table-column>
         <el-table-column label="用户名" prop="userName"></el-table-column>
         <el-table-column label="用户昵称" prop="userNickname"></el-table-column>
-        <el-table-column label="用户头像">
+        <el-table-column label="用户头像" width="80px">
           <template slot-scope="scope">
             <img :src="userHeadImg + scope.row.userImg" @click="showImg($event)">
           </template>
         </el-table-column>
-        <el-table-column label="用户性别">
+        <el-table-column label="用户性别" width="80px">
           <template slot-scope="scope">
             {{ scope.row.userGender | genderFormat }}
           </template>
         </el-table-column>
-        <el-table-column label="用户年龄" prop="userAge"></el-table-column>
-        <el-table-column label="用户电话" prop="userTel"></el-table-column>
+        <el-table-column label="用户年龄" prop="userAge" width="80px"></el-table-column>
+        <el-table-column label="用户电话" prop="userTel" width="120px"></el-table-column>
         <el-table-column label="用户邮箱" prop="userEmail"></el-table-column>
         <el-table-column label="创建时间">
           <template slot-scope="scope">
@@ -191,7 +191,7 @@ export default {
       //页码
       pageNum: 1,
       //当前页码数据条数
-      pageSize: 5,
+      pageSize: 10,
       //列表总数
       total: 0,
       //查询类型

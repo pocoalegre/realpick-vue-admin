@@ -195,7 +195,7 @@ export default {
       //页码
       pageNum: 1,
       //当前页码数据条数
-      pageSize: 5,
+      pageSize: 10,
       //banner列表
       bannerList: [],
       //列表总数

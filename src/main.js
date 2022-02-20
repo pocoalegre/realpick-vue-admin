@@ -8,6 +8,10 @@ import Moment from 'moment'
 import logout from './assets/js/logout'
 import checkRules from './assets/js/checkRules'
 import VueParticles from 'vue-particles'
+import * as echarts from 'echarts';
+
+//引入echarts
+Vue.prototype.$echarts = echarts
 
 //登录注册粒子特效
 Vue.use(VueParticles)
