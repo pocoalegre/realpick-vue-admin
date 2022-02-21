@@ -13,7 +13,7 @@
             <div class="box-card"><el-card class="box-card-inner">
               <img src="../assets/icons/liulanliang.png" alt="" class="box-card-inner-img">
               <div class="box-card-inner-content">
-                <div class="box-card-inner-content-number"><span>111111</span></div>
+                <div class="box-card-inner-content-number"><span>{{viewCount}}</span></div>
                 <div class="box-card-inner-content-text"><span>浏览量</span></div>
               </div>
             </el-card></div>
@@ -73,12 +73,14 @@ export default {
     this.getUserCount()
     this.getOrderCount()
     this.getSaleAmount()
+    this.getViewCount()
   },
   data() {
     return {
       userCount: 0,
       orderCount: 0,
       saleAmount: 0,
+      viewCount: 0,
     }
   },
   methods: {
@@ -128,6 +130,23 @@ export default {
       }).then(res => {
         if (res.data.code === 10000) {
           that.saleAmount = res.data.data
+        } else if (res.data.code === 10001) {
+          that.$message.error(res.data.msg)
+        }
+      })
+    },
+    //获取浏览量
+    getViewCount(){
+      const that = this
+      axios({
+        method: 'get',
+        url: '/dashborad/viewCount',
+        headers: {
+          token: this.$cookie.get("adminToken")
+        }
+      }).then(res => {
+        if (res.data.code === 10000) {
+          that.viewCount = res.data.data
         } else if (res.data.code === 10001) {
           that.$message.error(res.data.msg)
         }
