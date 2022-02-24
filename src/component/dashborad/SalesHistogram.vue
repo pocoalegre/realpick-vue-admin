@@ -24,7 +24,7 @@ export default {
       }
       myChart.setOption({
         title: {
-          text: '月度销量展示',
+          text: '2021年月度销量展示',
         },
         xAxis: {
           data: this.dataAxis,

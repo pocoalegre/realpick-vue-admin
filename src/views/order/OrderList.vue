@@ -270,12 +270,12 @@ export default {
     //监听pagesize改变事件
     handleSizeChange(newSize) {
       this.pageSize = newSize
-      this.getProductList()
+      this.getOrderList()
     },
     //监听页码值改变事件
     handleCurrentChange(newPage) {
       this.pageNum = newPage
-      this.getProductList()
+      this.getOrderList()
     },
     //删除订单
     deleteOrderById(id) {
