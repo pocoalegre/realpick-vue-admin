@@ -32,7 +32,7 @@
               <img src="../assets/icons/chengjiaoliang.png" alt="" class="box-card-inner-img">
               <div class="box-card-inner-content">
                 <div class="box-card-inner-content-number"><span>{{orderCount}}</span></div>
-                <div class="box-card-inner-content-text"><span>成交量</span></div>
+                <div class="box-card-inner-content-text"><span>订单量</span></div>
               </div>
             </el-card></div>
           </el-col>
@@ -101,7 +101,7 @@ export default {
         }
       })
     },
-    //获取成交量
+    //获取订单量
     getOrderCount(){
       const that = this
       axios({
