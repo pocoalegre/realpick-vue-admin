@@ -5,21 +5,37 @@
 <script>
 export default {
   name: "PieChart",
+  created() {
+    this.dataInit()
+  },
   mounted() {
-    this.draw()
+    const that = this
+    setTimeout(function () {
+      that.draw()
+    }, 200)
   },
   data() {
     return {
-      data: [
-        { value: 40, name: 'rose 1' },
-        { value: 38, name: 'rose 2' },
-        { value: 32, name: 'rose 3' },
-        { value: 30, name: 'rose 4' },
-        { value: 28, name: 'rose 5' }
-      ]
+      data: []
     }
   },
   methods: {
+    dataInit(){
+      const that = this
+      axios({
+        method: 'get',
+        url: '/order/salesFiveCount',
+        headers: {
+          token: this.$cookie.get("adminToken")
+        }
+      }).then(res => {
+        if (res.data.code === 10000) {
+          that.data = res.data.data
+        } else if (res.data.code === 10001) {
+          that.$message.error(res.data.msg)
+        }
+      })
+    },
     draw() {
       let myChart = this.$echarts.init(document.getElementById('pie-chart'));
       myChart.setOption({
@@ -28,13 +44,6 @@ export default {
         },
         legend: {
           top: 'bottom'
-        },
-        toolbox: {
-          show: true,
-          feature: {
-            mark: { show: true },
-            restore: { show: true },
-          }
         },
         series: [
           {

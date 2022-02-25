@@ -5,18 +5,41 @@
 <script>
 export default {
   name: "SalesHistogram",
+  created() {
+    this.dataInit()
+  },
   mounted() {
-    this.draw()
+    const that = this
+    setTimeout(function () {
+      that.draw()
+    }, 200)
   },
   data() {
     return {
-      dataAxis: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-      data: [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 330, 310],
+      dataAxis: [],
+      data: [],
       yMax: 500,
       dataShadow: [],
     }
   },
   methods: {
+    dataInit(){
+      const that = this
+      axios({
+        method: 'get',
+        url: '/order/monthSalesCount',
+        headers: {
+          token: this.$cookie.get("adminToken")
+        }
+      }).then(res => {
+        if (res.data.code === 10000) {
+          that.dataAxis = res.data.data[0]
+          that.data = res.data.data[1]
+        } else if (res.data.code === 10001) {
+          that.$message.error(res.data.msg)
+        }
+      })
+    },
     draw() {
       let myChart = this.$echarts.init(document.getElementById('sales-histogram'));
       for (let i = 0; i < this.data.length; i++) {
@@ -65,7 +88,7 @@ export default {
                 {offset: 0, color: '#83bff6'},
                 {offset: 0.5, color: '#188df0'},
                 {offset: 1, color: '#188df0'}
-              ])
+              ]),
             },
             emphasis: {
               itemStyle: {
@@ -76,7 +99,7 @@ export default {
                 ])
               }
             },
-            data: this.data
+            data: this.data,
           }
         ]
       })
