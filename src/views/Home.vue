@@ -93,22 +93,12 @@ export default {
         },
         {
           number: 4,
-          name: '商品类型管理',
-          icon: 'el-icon-menu'
-        },
-        {
-          number: 5,
           name: '商品管理',
           icon: 'el-icon-menu'
         },
         {
-          number: 6,
+          number: 5,
           name: '订单管理',
-          icon: 'el-icon-menu'
-        },
-        {
-          number: 7,
-          name: '快递管理',
           icon: 'el-icon-menu'
         },
       ],

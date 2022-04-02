@@ -12,13 +12,13 @@ import AdminPwdModify from "@/views/admin/AdminPwdModify";
 import UserList from "@/views/user/UserList";
 import UserPwdModify from "@/views/user/UserPwdModify";
 import BannerList from "@/views/page/BannerList";
-import CategoryList from "@/views/category/CategoryList";
+import CategoryList from "@/views/product/CategoryList";
 import ProductList from "@/views/product/ProductList";
 import ProductParam from "@/views/product/ProductParam";
 import ProductSku from "@/views/product/ProductSku";
 import OrderList from "@/views/order/OrderList";
 import OrderDetail from "@/views/order/OrderDetail";
-import DeliveryList from "@/views/delivery/DeliveryList";
+import DeliveryList from "@/views/order/DeliveryList";
 
 Vue.use(VueRouter)
 
@@ -123,7 +123,7 @@ const routes = [
                 path: '/productList',
                 name: 'ProductList',
                 component: ProductList,
-                parent: 5,
+                parent: 4,
                 self: '商品管理',
                 icon: 'el-icon-s-tools',
                 display: true
@@ -132,7 +132,7 @@ const routes = [
                 path: '/productParam',
                 name: 'ProductParam',
                 component: ProductParam,
-                parent: 5,
+                parent: 4,
                 self: '商品参数管理',
                 icon: 'el-icon-s-tools',
                 display: true
@@ -141,7 +141,7 @@ const routes = [
                 path: '/productSku',
                 name: 'ProductSku',
                 component: ProductSku,
-                parent: 5,
+                parent: 4,
                 self: '商品sku管理',
                 icon: 'el-icon-s-tools',
                 display: true
@@ -150,7 +150,7 @@ const routes = [
                 path: '/orderList',
                 name: 'OrderList',
                 component: OrderList,
-                parent: 6,
+                parent: 5,
                 self: '订单管理',
                 icon: 'el-icon-s-tools',
                 display: true
@@ -159,7 +159,7 @@ const routes = [
                 path: '/orderDetail',
                 name: 'OrderDetail',
                 component: OrderDetail,
-                parent: 6,
+                parent: 5,
                 self: '订单详情管理',
                 icon: 'el-icon-s-tools',
                 display: true
@@ -168,7 +168,7 @@ const routes = [
                 path: '/deliveryList',
                 name: 'DeliveryList',
                 component: DeliveryList,
-                parent: 7,
+                parent: 5,
                 self: '快递管理',
                 icon: 'el-icon-s-tools',
                 display: true
