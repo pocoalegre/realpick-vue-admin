@@ -26,6 +26,14 @@
             <el-button slot="append" icon="el-icon-search" @click="getOrderList"></el-button>
           </el-input>
         </el-col>
+        <el-col :span="5">
+          <el-switch
+              class="wait-switch"
+              v-model="waitValue"
+              active-text="查看待发货订单（条件查询请关闭此选项）"
+              @change="waitChange">
+          </el-switch>
+        </el-col>
       </el-row>
       <el-table :data="orderList" border stripe>
         <el-table-column label="编号" prop="orderId" width="80px" fixed="left"></el-table-column>
@@ -179,6 +187,8 @@ export default {
       queryType: '',
       //查询信息
       queryInfo: '',
+      //待发货按钮状态
+      waitValue: false,
       //类型选项
       typeOptions: [
         {
@@ -353,6 +363,56 @@ export default {
           })
         }
       })
+    },
+    //待发货按钮改变
+    waitChange(){
+      if (this.waitValue === true){
+        this.queryType = ''
+        this.queryInfo = ''
+        const that = this
+        axios({
+          method: 'get',
+          url: 'order/list',
+          params: {
+            queryType: 'status',
+            queryInfo: 2,
+            pageNum: this.pageNum,
+            pageSize: this.pageSize
+          },
+          headers: {
+            token: this.$cookie.get("adminToken")
+          }
+        }).then(res => {
+          if (res.data.code === 10000) {
+            that.orderList = res.data.data.list
+            that.total = res.data.data.total
+          } else {
+            that.$message.error(res.data.msg)
+          }
+        })
+      }else {
+        const that = this
+        axios({
+          method: 'get',
+          url: 'order/list',
+          params: {
+            queryType: '',
+            queryInfo: '',
+            pageNum: this.pageNum,
+            pageSize: this.pageSize
+          },
+          headers: {
+            token: this.$cookie.get("adminToken")
+          }
+        }).then(res => {
+          if (res.data.code === 10000) {
+            that.orderList = res.data.data.list
+            that.total = res.data.data.total
+          } else {
+            that.$message.error(res.data.msg)
+          }
+        })
+      }
     }
   },
   filters: {
@@ -386,5 +446,10 @@ export default {
 
 .option-query {
   margin-right: -40px;
+}
+
+.wait-switch {
+  opacity: 0.8;
+  margin-top: 10px;
 }
 </style>
