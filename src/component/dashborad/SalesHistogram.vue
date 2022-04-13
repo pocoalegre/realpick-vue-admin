@@ -27,7 +27,7 @@ export default {
       const that = this
       axios({
         method: 'get',
-        url: '/order/monthSalesCount',
+        url: '/dashborad/monthSalesCount',
         headers: {
           token: this.$cookie.get("adminToken")
         }
