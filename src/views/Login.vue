@@ -19,7 +19,7 @@
     </vue-particles>
     <div class="login-box">
       <span>雀石优选后台管理系统</span>
-      <!-- 登陆表单 -->
+      <!-- 登录表单 -->
       <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="0px" class="login-form">
         <!-- 管理员名 -->
         <el-form-item prop="name">
@@ -56,7 +56,7 @@ export default {
   },
   data() {
     return {
-      //登陆表单绑定数据对象
+      //登录表单绑定数据对象
       loginForm: {
         name: '',
         pwd: '',
